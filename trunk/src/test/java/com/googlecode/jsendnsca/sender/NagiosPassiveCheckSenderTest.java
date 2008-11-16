@@ -1,14 +1,14 @@
-package com.code.google.jsendnsca.sender;
+package com.googlecode.jsendnsca.sender;
 
 import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.code.google.jsendnsca.sender.MessagePayload;
-import com.code.google.jsendnsca.sender.NagiosException;
-import com.code.google.jsendnsca.sender.NagiosPassiveCheckSender;
-import com.code.google.jsendnsca.sender.NagiosSettings;
+import com.googlecode.jsendnsca.sender.MessagePayload;
+import com.googlecode.jsendnsca.sender.NagiosException;
+import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
+import com.googlecode.jsendnsca.sender.NagiosSettings;
 
 
 public class NagiosPassiveCheckSenderTest {

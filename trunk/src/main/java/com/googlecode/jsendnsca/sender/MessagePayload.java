@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.sender;
+package com.googlecode.jsendnsca.sender;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

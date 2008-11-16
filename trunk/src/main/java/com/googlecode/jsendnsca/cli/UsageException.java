@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.cli;
+package com.googlecode.jsendnsca.cli;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

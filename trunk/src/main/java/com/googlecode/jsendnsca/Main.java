@@ -1,9 +1,9 @@
-package com.code.google.jsendnsca;
+package com.googlecode.jsendnsca;
 
-import com.code.google.jsendnsca.cli.OptionsParser;
-import com.code.google.jsendnsca.cli.UsageException;
-import com.code.google.jsendnsca.sender.NagiosException;
-import com.code.google.jsendnsca.sender.NagiosPassiveCheckSender;
+import com.googlecode.jsendnsca.cli.OptionsParser;
+import com.googlecode.jsendnsca.cli.UsageException;
+import com.googlecode.jsendnsca.sender.NagiosException;
+import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
 
 public class Main {
     

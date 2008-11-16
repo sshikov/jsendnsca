@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.utils;
+package com.googlecode.jsendnsca.utils;
 
 public class ByteArrayUtils {
 

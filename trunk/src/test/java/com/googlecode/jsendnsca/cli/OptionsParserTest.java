@@ -1,13 +1,13 @@
-package com.code.google.jsendnsca.cli;
+package com.googlecode.jsendnsca.cli;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.code.google.jsendnsca.cli.OptionsParser;
-import com.code.google.jsendnsca.cli.UsageException;
-import com.code.google.jsendnsca.sender.MessagePayload;
-import com.code.google.jsendnsca.sender.NagiosSettings;
+import com.googlecode.jsendnsca.cli.OptionsParser;
+import com.googlecode.jsendnsca.cli.UsageException;
+import com.googlecode.jsendnsca.sender.MessagePayload;
+import com.googlecode.jsendnsca.sender.NagiosSettings;
 
 public class OptionsParserTest {
 

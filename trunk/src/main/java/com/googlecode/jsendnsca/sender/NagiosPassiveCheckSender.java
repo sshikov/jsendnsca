@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.sender;
+package com.googlecode.jsendnsca.sender;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.zip.CRC32;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
-import com.code.google.jsendnsca.utils.ByteArrayUtils;
+import com.googlecode.jsendnsca.utils.ByteArrayUtils;
 
 public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
     

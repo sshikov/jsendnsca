@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.cli;
+package com.googlecode.jsendnsca.cli;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -8,8 +8,8 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang.ArrayUtils;
 
-import com.code.google.jsendnsca.sender.MessagePayload;
-import com.code.google.jsendnsca.sender.NagiosSettings;
+import com.googlecode.jsendnsca.sender.MessagePayload;
+import com.googlecode.jsendnsca.sender.NagiosSettings;
 
 @SuppressWarnings("static-access")
 public class OptionsParser {
