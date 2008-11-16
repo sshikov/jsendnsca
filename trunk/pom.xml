@@ -103,7 +103,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.code.google.jsendnsca.Main</mainClass>
+							<mainClass>com.googlecode.jsendnsca.Main</mainClass>
 						</manifest>
 					</archive>
 					<finalName>jsendnsca</finalName>
