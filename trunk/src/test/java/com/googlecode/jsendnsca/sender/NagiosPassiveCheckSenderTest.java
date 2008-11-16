@@ -10,7 +10,6 @@ import com.googlecode.jsendnsca.sender.NagiosException;
 import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
 import com.googlecode.jsendnsca.sender.NagiosSettings;
 
-
 public class NagiosPassiveCheckSenderTest {
 
     @Test
@@ -18,16 +17,16 @@ public class NagiosPassiveCheckSenderTest {
     public void sendPassiveAlert() {
         try {
             final NagiosSettings nagiosSettings = new NagiosSettings();
-            nagiosSettings.setNagiosHost("dmarrel01.spinvox.lan");
+            nagiosSettings.setNagiosHost("localhost");
             nagiosSettings.setPassword("hasturrocks");
             
             final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
             
             final MessagePayload payload = new MessagePayload();
-            payload.setHostname("vm32");
+            payload.setHostname("localhost");
             payload.setLevel(MessagePayload.LEVEL_CRITICAL);
-            payload.setServiceName("Storage Manager");
-            payload.setMessage("Refactored and working");
+            payload.setServiceName("Test Service Name");
+            payload.setMessage("Test Message");
             
             passiveAlerter.send(payload);
         } catch (NagiosException ex) {
