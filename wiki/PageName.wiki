@@ -1,0 +1,15 @@
+#summary Documentation
+
+==About JSend NSCA==
+
+JSend NSCA is an API for sending Nagios Passive Checks to the [http://www.nagios.org/ Nagios] [http://www.nagios.org/faqs/index.php?section_id=5&expand=false&showdesc=true NSCA] add-on. 
+
+The current solution for sending Passive Checks is to use Runtime().exec(..) and call the send_nsca tool. Not only is this not cross-platform as send_nsca runs on nix platforms only but it is also slow and a bit ugly IMHO.
+
+I'm using the basis of this code currently where work in a production environment so I guess you too can safely and reliably use this code.
+
+Thanks goes to the [http://nagiosappender.sourceforge.net/ NagiosAppender] project which I used to work out the details of the Passive Check protocol. 
+
+==Quick Start==
+
+Include 
