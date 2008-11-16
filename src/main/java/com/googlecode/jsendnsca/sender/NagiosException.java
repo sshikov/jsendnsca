@@ -1,4 +1,4 @@
-package com.code.google.jsendnsca.sender;
+package com.googlecode.jsendnsca.sender;
 
 /**
  *  Thrown if an exception is encountered while sending a Nagios Passive Alert
