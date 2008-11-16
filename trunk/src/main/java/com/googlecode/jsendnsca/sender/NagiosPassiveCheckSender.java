@@ -80,7 +80,9 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
             IOUtils.closeQuietly(inputStream);
             
             try {
-                socket.close();
+                if(socket != null && !socket.isClosed()) {
+                	socket.close();
+                }
             } catch (IOException ignore) {}
         }
     }
