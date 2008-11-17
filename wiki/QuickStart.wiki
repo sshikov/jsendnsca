@@ -1,4 +1,5 @@
 #summary Quick Start
+#labels Featured,Phase-Deploy,Phase-Implementation
 ==About JSend NSCA==
 
 JSend NSCA is an API for sending Nagios Passive Checks to the [http://www.nagios.org/ Nagios] [http://www.nagios.org/faqs/index.php?section_id=5&expand=false&showdesc=true NSCA] add-on. 
