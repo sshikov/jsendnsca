@@ -14,3 +14,28 @@ The current tool set is used for development is as follows
  * Eclipse Plugins
   # m2eclipse - used for integration with eclipse - http://m2eclipse.codehaus.org/
   # Subversive - used for SVN integration within eclipse - http://www.eclipse.org/subversive/
+
+== Checkout from SVN ==
+
+You can checkout the source code from SVN command line
+
+{{{
+svn co http://jsendnsca.googlecode.com/svn/trunk/ jsendnsca
+}}}
+
+Otherwise, you can use Subversive within eclipse to check out
+
+== Build ==
+
+To build the project, use maven from the project root dir as follows
+
+{{{
+C:\Projects\jsendnsca>mvn clean install
+}}}
+
+This will compile the source, build the jars and create the bin, docs and dist directories.
+
+ 
+
+
+
