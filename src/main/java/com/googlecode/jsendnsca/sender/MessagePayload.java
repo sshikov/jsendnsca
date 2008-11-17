@@ -34,6 +34,32 @@ public class MessagePayload {
     private String message;
 
     /**
+     * Construct a new {@link MessagePayload}
+     */
+    public MessagePayload() {
+        
+    }
+
+    /**
+     * Construct a new {@link MessagePayload}
+     * 
+     * @param hostname
+     *            the hostname to be sent in this passive check
+     * @param level
+     *            the level
+     * @param serviceName
+     *            the service name
+     * @param message
+     *            the message
+     */
+    public MessagePayload(String hostname, int level, String serviceName, String message) {
+        this.hostname = hostname;
+        this.level = level;
+        this.serviceName = serviceName;
+        this.message = message;
+    }
+
+    /**
      * The hostname to be sent in this passive check
      * 
      * @return the hostanme
@@ -128,7 +154,8 @@ public class MessagePayload {
     /**
      * Set the service name of this passive check
      * 
-     * @param serviceName the service name
+     * @param serviceName
+     *            the service name
      */
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
@@ -146,7 +173,8 @@ public class MessagePayload {
     /**
      * Set the message to send in this passive check
      * 
-     * @param message the message
+     * @param message
+     *            the message
      */
     public void setMessage(String message) {
         this.message = message;
