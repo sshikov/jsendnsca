@@ -5,8 +5,18 @@ import com.googlecode.jsendnsca.cli.UsageException;
 import com.googlecode.jsendnsca.sender.NagiosException;
 import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
 
+/**
+ * Main class for the command line tool
+ * 
+ * @author Raj.Patel
+ * @version 1.0
+ */
 public class Main {
     
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             sendPassiveCheck(args);
