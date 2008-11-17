@@ -54,9 +54,9 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<mkdir dir="${basedir}/bin"/>
-								<mkdir dir="${basedir}/docs"/>
-								<mkdir dir="${basedir}/dist"/>
+								<mkdir dir="${basedir}/bin" />
+								<mkdir dir="${basedir}/docs" />
+								<mkdir dir="${basedir}/dist" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -107,8 +107,8 @@
 										<include name="pom.xml" />
 									</tarfileset>
 								</tar>
-								<gzip src="${basedir}/dist/jsend-nsca-${version}.tar" destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz"/>
-								<delete file="${basedir}/dist/jsend-nsca-${version}.tar"/>
+								<gzip src="${basedir}/dist/jsend-nsca-${version}.tar" destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz" />
+								<delete file="${basedir}/dist/jsend-nsca-${version}.tar" />
 								<zip destfile="${basedir}/dist/jsend-nsca-${version}.zip">
 									<zipfileset dir="${basedir}">
 										<include name="bin/**/*" />
@@ -173,4 +173,13 @@
 			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.4.2</version>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
