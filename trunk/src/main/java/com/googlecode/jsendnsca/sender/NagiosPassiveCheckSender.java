@@ -11,6 +11,12 @@ import org.apache.commons.lang.StringUtils;
 
 import com.googlecode.jsendnsca.utils.ByteArrayUtils;
 
+/**
+ * This class is used to send a Passive Check to the Nagios NSCA add-on
+ * 
+ * @author Raj.Patel
+ * @version 1.0
+ */
 public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
     
     private static final int INITIALISATION_VECTOR_SIZE = 128;
@@ -21,10 +27,21 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 
     private NagiosSettings nagiosSettings;
 
+    /**
+     * Construct a new {@link NagiosPassiveCheckSender} with the provided {@link NagiosSettings}
+     * 
+     * @param nagiosSettings the {@link NagiosSettings} to use to send the Passive Check
+     */
     public NagiosPassiveCheckSender(NagiosSettings nagiosSettings) {
         this.nagiosSettings = nagiosSettings;
     }
 
+    /**
+     * Send Passive Check
+     * 
+     * @param payload the Passive Check message payload
+     * @throws NagiosException thrown if an error occurs while sending the passive check
+     */
     public void send(MessagePayload payload) throws NagiosException {
         Socket socket = null;
         OutputStream outputStream = null;
