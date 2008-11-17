@@ -53,16 +53,8 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete>
-									<fileset dir="${basedir}/bin">
-										<include name="**/*" />
-									</fileset>
-									<fileset dir="${basedir}/docs">
-										<include name="**/*" />
-									</fileset>
-								</delete>
-								<mkdir dir="${basedir}/bin" />
-								<mkdir dir="${basedir}/docs" />
+								<delete dir="${basedir}/bin" includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/docs" includeEmptyDirs="true" includes="**/*" />
 							</tasks>
 						</configuration>
 					</execution>
