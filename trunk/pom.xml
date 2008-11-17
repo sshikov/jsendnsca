@@ -46,6 +46,20 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
+						<id>create directories</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<mkdir dir="${basedir}/bin"/>
+								<mkdir dir="${basedir}/docs"/>
+								<mkdir dir="${basedir}/dist"/>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
 						<id>clean bin, docs directory</id>
 						<phase>clean</phase>
 						<goals>
@@ -55,6 +69,7 @@
 							<tasks>
 								<delete dir="${basedir}/bin" includeEmptyDirs="true" includes="**/*" />
 								<delete dir="${basedir}/docs" includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/dist" includeEmptyDirs="true" includes="**/*" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -71,6 +86,37 @@
 										<exclude name=".svn" />
 									</fileset>
 								</copy>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build distributable tar.gz and zip</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<tar destfile="${basedir}/dist/jsend-nsca-${version}.tar">
+									<tarfileset dir="${basedir}" preserveLeadingSlashes="true">
+										<include name="bin/**/*" />
+										<include name="docs/**/*" />
+										<include name="target/**/*.jar" />
+										<include name="src/**/*" />
+										<include name="pom.xml" />
+									</tarfileset>
+								</tar>
+								<gzip src="${basedir}/dist/jsend-nsca-${version}.tar" destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz"/>
+								<delete file="${basedir}/dist/jsend-nsca-${version}.tar"/>
+								<zip destfile="${basedir}/dist/jsend-nsca-${version}.zip">
+									<zipfileset dir="${basedir}">
+										<include name="bin/**/*" />
+										<include name="docs/**/*" />
+										<include name="target/**/*.jar" />
+										<include name="src/**/*" />
+										<include name="pom.xml" />
+									</zipfileset>
+								</zip>
 							</tasks>
 						</configuration>
 					</execution>
@@ -111,6 +157,15 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate javadoc</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
 					<reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
 				</configuration>
