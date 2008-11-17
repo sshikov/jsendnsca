@@ -1,46 +1,52 @@
 package com.googlecode.jsendnsca.sender;
 
 /**
- *  Thrown if an exception is encountered while sending a Nagios Passive Alert
- *	@author Raj.Patel
+ * Thrown if an exception is encountered while sending a Passive Check
+ * 
+ * @author Raj.Patel
+ * @version 1.0
  */
-public class NagiosException extends Exception 
-{
+public class NagiosException extends Exception {
 
-	private static final long serialVersionUID = 5630051795639637370L;
-
-	/**
-     * Constructs an instance of <code>NagiosException</code> with the cause
-     * @param cause the cause
-     */
-    public NagiosException(Throwable cause)
-    {
-    	super(cause);
-    }
+    private static final long serialVersionUID = 5630051795639637370L;
 
     /**
      * Constructs an instance of <code>NagiosException</code> with the cause
-     * @param msg the detail message.
-     * @param cause the cause
+     * 
+     * @param cause
+     *            the cause
      */
-    public NagiosException(String msg, Throwable cause)
-    {
-    	super(msg,cause);
+    public NagiosException(Throwable cause) {
+        super(cause);
     }
 
     /**
-     * Creates a new instance of <code>NagiosException</code> without detail message.
+     * Constructs an instance of <code>NagiosException</code> with the cause
+     * 
+     * @param msg
+     *            the detail message.
+     * @param cause
+     *            the cause
      */
-    public NagiosException()
-    {
+    public NagiosException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 
     /**
-     * Constructs an instance of <code>NagiosException</code> with the specified detail message.
-     * @param msg the detail message.
+     * Creates a new instance of <code>NagiosException</code> without detail
+     * message.
      */
-    public NagiosException(String msg)
-    {
+    public NagiosException() {
+    }
+
+    /**
+     * Constructs an instance of <code>NagiosException</code> with the
+     * specified detail message.
+     * 
+     * @param msg
+     *            the detail message.
+     */
+    public NagiosException(String msg) {
         super(msg);
     }
 
