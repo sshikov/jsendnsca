@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.code.google</groupId>
 	<artifactId>jsendnsca</artifactId>
@@ -45,19 +46,23 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>clean bin directory</id>
+						<id>clean bin, docs directory</id>
 						<phase>clean</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
 							<tasks>
-								<delete quiet="true">
-									<fileset dir="bin">
+								<delete>
+									<fileset dir="${basedir}/bin">
+										<include name="**/*" />
+									</fileset>
+									<fileset dir="${basedir}/docs">
 										<include name="**/*" />
 									</fileset>
 								</delete>
-								<mkdir dir="bin"/>
+								<mkdir dir="${basedir}/bin" />
+								<mkdir dir="${basedir}/docs" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -109,6 +114,13 @@
 					<finalName>jsendnsca</finalName>
 					<appendAssemblyId>true</appendAssemblyId>
 					<outputDirectory>bin</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
