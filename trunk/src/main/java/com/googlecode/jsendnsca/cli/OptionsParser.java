@@ -11,6 +11,12 @@ import org.apache.commons.lang.ArrayUtils;
 import com.googlecode.jsendnsca.sender.MessagePayload;
 import com.googlecode.jsendnsca.sender.NagiosSettings;
 
+/**
+ * Used to parse the command line options
+ * 
+ * @author Raj.Patel
+ * @version 1.0
+ */
 @SuppressWarnings("static-access")
 public class OptionsParser {
 
@@ -25,6 +31,15 @@ public class OptionsParser {
     private CommandLine commandLine;
     private String[] messageArgs;
 
+    /**
+     * Construct a new {@link OptionsParser} using the provided command line
+     * arguments
+     * 
+     * @param args
+     *            the command line arguments
+     * @throws UsageException
+     *             thrown on invalid or missing arguments
+     */
     public OptionsParser(String[] args) throws UsageException {
 
         options = buildNagiosOptions();
@@ -32,7 +47,8 @@ public class OptionsParser {
         try {
             commandLine = new GnuParser().parse(options, args);
 
-            // check we have three message payload args and first is a valid level
+            // check we have three message payload args and first is a valid
+            // level
             messageArgs = commandLine.getArgs();
             if (messageArgs.length < 3 || !ArrayUtils.contains(LEVELS, messageArgs[0])) {
                 throw new UsageException(options);
@@ -56,17 +72,16 @@ public class OptionsParser {
     }
 
     private Option getOption(String longName, String argName, String description) {
-        final Option option = OptionBuilder
-            .withLongOpt(longName)
-            .withArgName(argName)
-            .hasArg()
-            .withDescription(description)
-            .isRequired(false)
-            .create();
-        
+        final Option option = OptionBuilder.withLongOpt(longName).withArgName(argName).hasArg().withDescription(description).isRequired(false).create();
+
         return option;
     }
 
+    /**
+     * Get {@link NagiosSettings} from the provided command line
+     * 
+     * @return the {@link NagiosSettings} to use to send the passive check
+     */
     public NagiosSettings getNagiosSettings() {
         final NagiosSettings nagiosSettings = new NagiosSettings();
 
@@ -78,10 +93,16 @@ public class OptionsParser {
         return nagiosSettings;
     }
 
+    /**
+     * Get the {@link MessagePayload} of the passive check as specified on the
+     * command line
+     * 
+     * @return the {@link MessagePayload}
+     */
     public MessagePayload getMessagePayload() {
         final MessagePayload messagePayload = new MessagePayload();
-        
-        messagePayload.setHostname(commandLine.getOptionValue(ALERTINGHOST_OPTION,"localhost"));        
+
+        messagePayload.setHostname(commandLine.getOptionValue(ALERTINGHOST_OPTION, "localhost"));
         messagePayload.setLevel(messageArgs[0]);
         messagePayload.setServiceName(messageArgs[1]);
         messagePayload.setMessage(messageArgs[2]);
