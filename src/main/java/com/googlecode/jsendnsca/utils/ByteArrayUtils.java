@@ -10,8 +10,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 package com.googlecode.jsendnsca.utils;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * Utility methods for writing to a byte array
@@ -82,6 +84,11 @@ public class ByteArrayUtils {
      * @return the populated byte array
      */
     public static byte[] getFixedSizeBytes(int fixedSize, String value) {
+        if (value == null)
+            return null;
+        if (StringUtils.isEmpty(value))
+            return new byte[fixedSize];
+
         final byte[] myBytes = new byte[fixedSize];
 
         if (value.length() > fixedSize) {
