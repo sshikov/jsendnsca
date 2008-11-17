@@ -12,7 +12,9 @@ Thanks goes to the [http://nagiosappender.sourceforge.net/ NagiosAppender] proje
 
 ==Quick Start==
 
-Download the binaries, extract and include the jsendnsca-jar-with-dependencies.jar in your class path. 
+Download the distribution, extract and include the bin/jsendnsca-jar-with-dependencies.jar in your class path. 
+
+Alternatively, include the target/jsendnsca-1.0.jar in your classpath. Also include dependencies as listed in the pom.xml as required.
 
 The sample code below is used to send a passive check
 
@@ -52,7 +54,7 @@ public class NagiosPassiveCheckSenderTest {
 
 In addition to using the API from your code for sending passive checks, a command line tool is available.
 
-From the extracted binaries you can use the scripts as follows:
+From the extracted bin directory you can use the scripts as follows:
 
 1. (Unix) Add executable permissions to the jsend_nsca script
 
