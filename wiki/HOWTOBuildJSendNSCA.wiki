@@ -1,0 +1,16 @@
+#summary How to build JSend NSCA
+
+= Introduction =
+
+The following are instructions on how to build JSend NSCA
+
+== Tools ==
+
+The current tool set is used for development is as follows
+
+ * Java SE 5.0
+ * Maven 2 - used for managing builds - http://maven.apache.org/
+ * Eclipse Europa - IDE for java development - http://www.eclipse.org/europa/
+ * Eclipse Plugins
+  # m2eclipse - used for integration with eclipse - http://m2eclipse.codehaus.org/
+  # Subversive - used for SVN integration within eclipse - http://www.eclipse.org/subversive/
