@@ -16,6 +16,16 @@ public class MessagePayloadTest {
         payload.setServiceName(StringUtils.EMPTY);
     }
     
+    @Test
+    public void shouldConstructValidObjectWhenUsingNoArgConstructor() throws Exception {
+        final MessagePayload messagePayload = new MessagePayload();
+
+        assertEquals("localhost", messagePayload.getHostname());
+        assertEquals(MessagePayload.LEVEL_UNKNOWN, messagePayload.getLevel());
+        assertEquals("UNDEFINED", messagePayload.getServiceName());
+        assertEquals(StringUtils.EMPTY, messagePayload.getMessage());
+    }
+    
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowIllegalArgumentExceptionOnEmptyHostName() throws Exception {
         final MessagePayload payload = new MessagePayload();
