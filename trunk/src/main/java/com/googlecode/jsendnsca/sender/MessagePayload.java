@@ -16,6 +16,8 @@ package com.googlecode.jsendnsca.sender;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * The Passive Check Message Payload
  * 
@@ -66,6 +68,10 @@ public class MessagePayload {
      *            the message
      */
     public MessagePayload(String hostname, int level, String serviceName, String message) {
+        if(StringUtils.isBlank(hostname) || StringUtils.isBlank(serviceName)) {
+            throw new IllegalArgumentException("hostname or serviceName cannot be null or an empty String");
+        }
+        
         this.hostname = hostname;
         this.level = level;
         this.serviceName = serviceName;
@@ -115,6 +121,9 @@ public class MessagePayload {
      *            the hostname to use
      */
     public void setHostname(String hostname) {
+        if(StringUtils.isBlank(hostname)) {
+            throw new IllegalArgumentException("hostname cannot be null or an empty String");
+        }
         this.hostname = hostname;
     }
 
@@ -171,6 +180,9 @@ public class MessagePayload {
      *            the service name
      */
     public void setServiceName(String serviceName) {
+        if(StringUtils.isBlank(serviceName)) {
+            throw new IllegalArgumentException("serviceName cannot be null or an empty String");
+        }
         this.serviceName = serviceName;
     }
 

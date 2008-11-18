@@ -10,18 +10,13 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-*/
+ */
 package com.googlecode.jsendnsca.sender;
 
 import static org.junit.Assert.fail;
 
 import org.junit.Ignore;
 import org.junit.Test;
-
-import com.googlecode.jsendnsca.sender.MessagePayload;
-import com.googlecode.jsendnsca.sender.NagiosException;
-import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
-import com.googlecode.jsendnsca.sender.NagiosSettings;
 
 public class NagiosPassiveCheckSenderTest {
 
@@ -32,15 +27,15 @@ public class NagiosPassiveCheckSenderTest {
             final NagiosSettings nagiosSettings = new NagiosSettings();
             nagiosSettings.setNagiosHost("localhost");
             nagiosSettings.setPassword("hasturrocks");
-            
+
             final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
-            
+
             final MessagePayload payload = new MessagePayload();
             payload.setHostname("localhost");
             payload.setLevel(MessagePayload.LEVEL_CRITICAL);
             payload.setServiceName("Test Service Name");
             payload.setMessage("Test Message");
-            
+
             passiveAlerter.send(payload);
         } catch (NagiosException ex) {
             fail(ex.toString());
