@@ -15,7 +15,6 @@ package com.googlecode.jsendnsca;
 
 import com.googlecode.jsendnsca.cli.OptionsParser;
 import com.googlecode.jsendnsca.cli.UsageException;
-import com.googlecode.jsendnsca.sender.NagiosException;
 import com.googlecode.jsendnsca.sender.NagiosPassiveCheckSender;
 
 /**
@@ -41,7 +40,7 @@ public class Main {
         }
     }
 
-    private static void sendPassiveCheck(String[] args) throws UsageException, NagiosException {
+    private static void sendPassiveCheck(String[] args) throws Exception {
         final OptionsParser optionsParser = new OptionsParser(args);
         
         NagiosPassiveCheckSender nagiosPassiveAlerter = new NagiosPassiveCheckSender(optionsParser.getNagiosSettings());
