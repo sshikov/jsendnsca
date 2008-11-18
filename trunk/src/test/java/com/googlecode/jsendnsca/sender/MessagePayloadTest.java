@@ -60,12 +60,12 @@ public class MessagePayloadTest {
         final MessagePayload messagePayload = new MessagePayload();
         
         messagePayload.setLevel("OK");
-        assertEquals(0, messagePayload.getLevel());
+        assertEquals(MessagePayload.LEVEL_OK, messagePayload.getLevel());
         messagePayload.setLevel("WARNING");
-        assertEquals(1, messagePayload.getLevel());
+        assertEquals(MessagePayload.LEVEL_WARNING, messagePayload.getLevel());
         messagePayload.setLevel("CRITICAL");
-        assertEquals(2, messagePayload.getLevel());
+        assertEquals(MessagePayload.LEVEL_CRITICAL, messagePayload.getLevel());
         messagePayload.setLevel("UNKNOWN");
-        assertEquals(3, messagePayload.getLevel());
+        assertEquals(MessagePayload.LEVEL_UNKNOWN, messagePayload.getLevel());
     }
 }
