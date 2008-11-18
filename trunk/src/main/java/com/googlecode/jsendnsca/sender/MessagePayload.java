@@ -26,6 +26,9 @@ import org.apache.commons.lang.StringUtils;
  */
 public class MessagePayload {
 
+    private static final String DEFAULT_SERVICENAME = "UNDEFINED";
+    private static final String DEFAULT_HOSTNAME = "localhost";
+    
     /**
      * OK Level
      */
@@ -43,10 +46,10 @@ public class MessagePayload {
      */
     public static final int LEVEL_UNKNOWN = 3;
 
-    private String hostname = "localhost";
-    private int level;
-    private String serviceName;
-    private String message;
+    private String hostname = DEFAULT_HOSTNAME;
+    private int level = LEVEL_UNKNOWN;
+    private String serviceName = DEFAULT_SERVICENAME;
+    private String message = StringUtils.EMPTY;
 
     /**
      * Construct a new {@link MessagePayload}
@@ -81,7 +84,7 @@ public class MessagePayload {
     /**
      * The hostname to be sent in this passive check
      * 
-     * @return the hostanme
+     * @return the hostname, defaults to "localhost"
      */
     public String getHostname() {
         return hostname;
@@ -130,7 +133,7 @@ public class MessagePayload {
     /**
      * Get the level of the Passive check
      * 
-     * @return the level
+     * @return the level, default is UNKNOWN
      */
     public int getLevel() {
         return level;
@@ -167,7 +170,7 @@ public class MessagePayload {
     /**
      * The service name of this passive check
      * 
-     * @return the service name
+     * @return the service name, default is "UNDEFINED"
      */
     public String getServiceName() {
         return serviceName;
@@ -189,7 +192,7 @@ public class MessagePayload {
     /**
      * The message to send in this passive check
      * 
-     * @return the message
+     * @return the message, default is an empty string
      */
     public String getMessage() {
         return message;
