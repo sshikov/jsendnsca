@@ -1,0 +1,185 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode.jsendnsca</groupId>
+	<artifactId>jsendnsca</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0</version>
+	<name>jsendnsca</name>
+	<url>http://code.google.com/p/jsendnsca/</url>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-cli</groupId>
+			<artifactId>commons-cli</artifactId>
+			<version>1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.4</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create directories</id>
+						<phase>initialize</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<mkdir dir="${basedir}/bin" />
+								<mkdir dir="${basedir}/docs" />
+								<mkdir dir="${basedir}/dist" />
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>clean bin, docs directory</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<delete dir="${basedir}/bin" includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/docs" includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/dist" includeEmptyDirs="true" includes="**/*" />
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy scripts to bin</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<copy todir="bin">
+									<fileset dir="scripts">
+										<exclude name=".svn" />
+									</fileset>
+								</copy>
+							</tasks>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build distributable tar.gz and zip</id>
+						<phase>install</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<tar destfile="${basedir}/dist/jsend-nsca-${version}.tar">
+									<tarfileset dir="${basedir}" preserveLeadingSlashes="true">
+										<include name="bin/**/*" />
+										<include name="docs/**/*" />
+										<include name="target/**/*.jar" />
+										<include name="src/**/*" />
+										<include name="pom.xml" />
+									</tarfileset>
+								</tar>
+								<gzip src="${basedir}/dist/jsend-nsca-${version}.tar" destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz" />
+								<delete file="${basedir}/dist/jsend-nsca-${version}.tar" />
+								<zip destfile="${basedir}/dist/jsend-nsca-${version}.zip">
+									<zipfileset dir="${basedir}">
+										<include name="bin/**/*" />
+										<include name="docs/**/*" />
+										<include name="target/**/*.jar" />
+										<include name="src/**/*" />
+										<include name="pom.xml" />
+									</zipfileset>
+								</zip>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>build fat jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>com.googlecode.jsendnsca.Main</mainClass>
+						</manifest>
+					</archive>
+					<finalName>jsendnsca</finalName>
+					<appendAssemblyId>true</appendAssemblyId>
+					<outputDirectory>bin</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate javadoc</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.4.2</version>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>
