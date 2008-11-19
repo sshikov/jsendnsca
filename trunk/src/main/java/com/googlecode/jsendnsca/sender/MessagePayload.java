@@ -158,7 +158,10 @@ public class MessagePayload {
      *            either "OK", "WARNING", "CRITICAL" or "UNKNOWN"
      */
     public void setLevel(String level) {
-
+        if(StringUtils.isBlank(level)) {
+            throw new IllegalArgumentException("Level cannot be null or an empty String");
+        }
+        
         if (level.equalsIgnoreCase("ok")) {
             this.level = LEVEL_OK;
         } else if (level.equalsIgnoreCase("warning")) {

@@ -80,4 +80,11 @@ public class MessagePayloadTest {
             assertEquals("Level [foobar] is not recognised", e.getMessage());
         }
     }
+    
+    @Test(expected=IllegalArgumentException.class)
+    public void shouldThrowIllegalArgumentExceptionIfStringLevelIsNull() throws Exception {
+        final MessagePayload messagePayload = new MessagePayload();
+        
+        messagePayload.setLevel(null);
+    }
 }
