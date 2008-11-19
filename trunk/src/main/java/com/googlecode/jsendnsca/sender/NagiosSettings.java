@@ -13,6 +13,8 @@
 */
 package com.googlecode.jsendnsca.sender;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * The settings to use for sending the Passive Check
  * 
@@ -42,6 +44,9 @@ public class NagiosSettings {
      *            the host or IP, defaults to localhost
      */
     public void setNagiosHost(String nagiosHost) {
+        if(StringUtils.isBlank(nagiosHost)) {
+            throw new IllegalArgumentException("nagiosHost cannot be null or empty");
+        }
         this.nagiosHost = nagiosHost;
     }
 
@@ -80,6 +85,9 @@ public class NagiosSettings {
      *            the password, defaults to "hasturrocks"
      */
     public void setPassword(String password) {
+        if(StringUtils.isBlank(password)) {
+            throw new IllegalArgumentException("password cannot be null or empty");
+        }
         this.password = password;
     }
 
