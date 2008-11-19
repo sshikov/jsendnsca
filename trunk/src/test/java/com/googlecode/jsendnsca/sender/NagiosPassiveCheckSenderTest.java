@@ -13,13 +13,26 @@
  */
 package com.googlecode.jsendnsca.sender;
 
-import org.junit.Ignore;
 import org.junit.Test;
+
+import com.googlecode.jsendnsca.mocks.MockNscaDaemon;
 
 public class NagiosPassiveCheckSenderTest {
 
-    @Test
-    @Ignore("Only to be used for manual verification as relies on NSCA")
+    @Test(expected=IllegalArgumentException.class)
+	public void shouldThrowIllegalArgExceptionOnConstructingSenderWithNullNagiosSettings() throws Exception {
+		new NagiosPassiveCheckSender(null);
+	}
+    
+    @Test(expected=IllegalArgumentException.class)
+	public void shouldThrowIllegalArgExceptionOnSendingWithNullMessagePayload() throws Exception {
+		final NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(new NagiosSettings());
+		
+		sender.send(null);
+	}
+	
+	@Test
+    //@Ignore("Only to be used for manual verification as relies on NSCA being running")
     public void sendPassiveAlert() throws Exception {
         final NagiosSettings nagiosSettings = new NagiosSettings();
         nagiosSettings.setNagiosHost("localhost");
@@ -33,6 +46,9 @@ public class NagiosPassiveCheckSenderTest {
         payload.setServiceName("Test Service Name");
         payload.setMessage("Test Message");
 
+        Thread daemonThread = new Thread(new MockNscaDaemon());
+        daemonThread.start();
+        Thread.sleep(1000);
         passiveAlerter.send(payload);
     }
 }
