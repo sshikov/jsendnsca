@@ -15,6 +15,7 @@ package com.googlecode.jsendnsca.sender;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.MessageFormat;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -25,9 +26,6 @@ import org.apache.commons.lang.StringUtils;
  * @version 1.0
  */
 public class MessagePayload {
-
-    private static final String DEFAULT_SERVICENAME = "UNDEFINED";
-    private static final String DEFAULT_HOSTNAME = "localhost";
 
     /**
      * OK Level
@@ -45,6 +43,9 @@ public class MessagePayload {
      * Unknown level
      */
     public static final int LEVEL_UNKNOWN = 3;
+
+    private static final String DEFAULT_HOSTNAME = "localhost";
+    private static final String DEFAULT_SERVICENAME = "UNDEFINED";
 
     private String hostname = DEFAULT_HOSTNAME;
     private int level = LEVEL_UNKNOWN;
@@ -150,21 +151,26 @@ public class MessagePayload {
     }
 
     /**
-     * Set the level of the Passive check using a {@link String}
+     * Set the level of the Passive check using a {@link String} The case of the
+     * {@link String} is ignored
      * 
      * @param level
-     *            either "OK", "WARNING" or "CRITICAL"
+     *            either "OK", "WARNING", "CRITICAL" or "UNKNOWN"
      */
     public void setLevel(String level) {
-        if (level.equals("OK")) {
+
+        if (level.equalsIgnoreCase("ok")) {
             this.level = LEVEL_OK;
-        } else if (level.equals("WARNING")) {
+        } else if (level.equalsIgnoreCase("warning")) {
             this.level = LEVEL_WARNING;
-        } else if (level.equals("CRITICAL")) {
+        } else if (level.equalsIgnoreCase("critical")) {
             this.level = LEVEL_CRITICAL;
-        } else {
+        } else if (level.equalsIgnoreCase("unknown")) {
             this.level = LEVEL_UNKNOWN;
+        } else {
+            throw new IllegalArgumentException(MessageFormat.format("Level [{0}] is not recognised", level));
         }
+
     }
 
     /**

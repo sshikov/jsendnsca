@@ -56,16 +56,28 @@ public class MessagePayloadTest {
     }
     
     @Test
-    public void shouldConvertStringLevelsToInteger() throws Exception {
+    public void shouldConvertStringLevelsToIntegerWhileIgnoringCase() throws Exception {
         final MessagePayload messagePayload = new MessagePayload();
         
-        messagePayload.setLevel("OK");
+        messagePayload.setLevel("Ok");
         assertEquals(MessagePayload.LEVEL_OK, messagePayload.getLevel());
-        messagePayload.setLevel("WARNING");
+        messagePayload.setLevel("Warning");
         assertEquals(MessagePayload.LEVEL_WARNING, messagePayload.getLevel());
-        messagePayload.setLevel("CRITICAL");
+        messagePayload.setLevel("Critical");
         assertEquals(MessagePayload.LEVEL_CRITICAL, messagePayload.getLevel());
-        messagePayload.setLevel("UNKNOWN");
+        messagePayload.setLevel("Unknown");
         assertEquals(MessagePayload.LEVEL_UNKNOWN, messagePayload.getLevel());
+    }
+    
+    @Test
+    public void shouldThrowIllegalArgumentExceptionIfStringLevelIsNotRecognised() throws Exception {
+        final MessagePayload messagePayload = new MessagePayload();
+        
+        try {
+            messagePayload.setLevel("foobar");
+            fail("Should throw an IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Level [foobar] is not recognised", e.getMessage());
+        }
     }
 }
