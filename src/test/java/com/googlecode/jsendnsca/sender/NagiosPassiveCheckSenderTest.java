@@ -32,7 +32,6 @@ public class NagiosPassiveCheckSenderTest {
 	}
 	
 	@Test
-    //@Ignore("Only to be used for manual verification as relies on NSCA being running")
     public void sendPassiveAlert() throws Exception {
         final NagiosSettings nagiosSettings = new NagiosSettings();
         nagiosSettings.setNagiosHost("localhost");
