@@ -39,6 +39,7 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 	private static final short NSCA_VERSION = 3;
 
 	private NagiosSettings nagiosSettings;
+	
 
 	/**
 	 * Construct a new {@link NagiosPassiveCheckSender} with the provided
@@ -103,8 +104,10 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 			// 2nd part, CRC
 			writeCRC(passiveCheckBytes);
 
-			encryptPayloadUsingXOR(passiveCheckBytes, initVector);
-
+			if (nagiosSettings.getEncryptionMethod() == NagiosSettings.XOR_ENCRYPTION) {
+				encryptPayloadUsingXOR(passiveCheckBytes, initVector);
+			}
+			
 			outputStream.write(passiveCheckBytes, 0, passiveCheckBytes.length);
 			outputStream.flush();
 		} catch (Exception e) {

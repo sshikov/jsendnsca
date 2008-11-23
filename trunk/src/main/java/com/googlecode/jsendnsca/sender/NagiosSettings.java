@@ -23,10 +23,14 @@ import org.apache.commons.lang.StringUtils;
  */
 public class NagiosSettings {
 
-    private String nagiosHost = "localhost";
+	public static final int NO_ENCRYPTION = 0;
+	public static final int XOR_ENCRYPTION = 1;
+    
+	private String nagiosHost = "localhost";
     private int port = 5667;
     private String password = "hasturrocks";
     private int timeout = 10000;
+    private int encryptionMethod = XOR_ENCRYPTION;
 
     /**
      * The host or IP of the Nagios host running the NSCA add-on
@@ -109,4 +113,23 @@ public class NagiosSettings {
     public void setTimeout(int timeout) {
         this.timeout = timeout;
     }
+
+	/**
+	 * The encryption method used by the NSCA Daemon
+	 * @return the method
+	 */
+	public int getEncryptionMethod() {
+		return encryptionMethod;
+	}
+
+	/**
+	 * The encryption method used by the NSCA Daemon, currently only NO_ENCRYPTION or XOR_ENCRYPTION
+	 * @param encryptionMethod the method
+	 */
+	public void setEncryptionMethod(int encryptionMethod) {
+		if(encryptionMethod != NO_ENCRYPTION && encryptionMethod != XOR_ENCRYPTION) {
+			throw new UnsupportedOperationException("Currently only NO_ENCRYPTION or XOR_ENCRYPTION Supported");
+		}
+		this.encryptionMethod = encryptionMethod;
+	}
 }
