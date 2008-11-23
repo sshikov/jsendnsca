@@ -17,6 +17,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.zip.CRC32;
 
 import org.apache.commons.io.IOUtils;
@@ -110,6 +111,8 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 			
 			outputStream.write(passiveCheckBytes, 0, passiveCheckBytes.length);
 			outputStream.flush();
+		} catch (SocketTimeoutException ste) {
+			throw ste;
 		} catch (Exception e) {
 			throw new NagiosException("Error occured while sending passive alert", e);
 		} finally {
@@ -124,11 +127,13 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 		}
 	}
 
-	private byte[] readInitializationVector(DataInputStream inputStream) throws NagiosException {
+	private byte[] readInitializationVector(DataInputStream inputStream) throws NagiosException, SocketTimeoutException {
 		final byte[] initVector = new byte[INITIALISATION_VECTOR_SIZE];
 		try {
 			inputStream.readFully(initVector, 0, INITIALISATION_VECTOR_SIZE);
 			return initVector;
+		} catch (SocketTimeoutException ste) {
+			throw ste;
 		} catch (Exception e) {
 			throw new NagiosException("Can't read initialisation vector", e);
 		}
