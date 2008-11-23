@@ -9,7 +9,9 @@
 	<name>jsendnsca</name>
 	<url>http://code.google.com/p/jsendnsca/</url>
 	<scm>
-		<connection>scm:svn:https://jsendnsca.googlecode.com/svn</connection>
+		<connection>
+			scm:svn:https://jsendnsca.googlecode.com/svn
+		</connection>
 		<developerConnection>
 			scm:svn:https://jsendnsca.googlecode.com/svn
 		</developerConnection>
@@ -77,12 +79,18 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete dir="${basedir}/bin"
-									includeEmptyDirs="true" includes="**/*" />
-								<delete dir="${basedir}/docs"
-									includeEmptyDirs="true" includes="**/*" />
-								<delete dir="${basedir}/dist"
-									includeEmptyDirs="true" includes="**/*" />
+								<delete includeemptydirs="true">
+									<fileset dir="${basedir}/bin"
+										includes="**/*" />
+								</delete>
+								<delete includeemptydirs="true">
+									<fileset dir="${basedir}/docs"
+										includes="**/*" />
+								</delete>
+								<delete includeemptydirs="true">
+									<fileset dir="${basedir}/dist"
+										includes="**/*" />
+								</delete>
 							</tasks>
 						</configuration>
 					</execution>
@@ -150,15 +158,6 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>build fat jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>attached</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<descriptorRefs>
 						<descriptorRef>
@@ -176,6 +175,15 @@
 					<appendAssemblyId>true</appendAssemblyId>
 					<outputDirectory>bin</outputDirectory>
 				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
