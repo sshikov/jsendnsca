@@ -23,7 +23,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class NagiosSettings {
 
+	/**
+	 * No encryption
+	 */
 	public static final int NO_ENCRYPTION = 0;
+	/**
+	 * XOR encryption
+	 */
 	public static final int XOR_ENCRYPTION = 1;
     
 	private String nagiosHost = "localhost";
