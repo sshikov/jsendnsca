@@ -19,35 +19,35 @@ import com.googlecode.jsendnsca.mocks.MockNscaDaemon;
 
 public class NagiosPassiveCheckSenderTest {
 
-    @Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowIllegalArgExceptionOnConstructingSenderWithNullNagiosSettings() throws Exception {
 		new NagiosPassiveCheckSender(null);
 	}
-    
-    @Test(expected=IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowIllegalArgExceptionOnSendingWithNullMessagePayload() throws Exception {
 		final NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(new NagiosSettings());
-		
+
 		sender.send(null);
 	}
-	
+
 	@Test
-    public void sendPassiveAlert() throws Exception {
-        final NagiosSettings nagiosSettings = new NagiosSettings();
-        nagiosSettings.setNagiosHost("localhost");
-        nagiosSettings.setPassword("hasturrocks");
+	public void sendPassiveAlert() throws Exception {
+		final NagiosSettings nagiosSettings = new NagiosSettings();
+		nagiosSettings.setNagiosHost("localhost");
+		nagiosSettings.setPassword("hasturrocks");
+		
+		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
-        final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
+		final MessagePayload payload = new MessagePayload();
+		payload.setHostname("localhost");
+		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
+		payload.setServiceName("Test Service Name");
+		payload.setMessage("Test Message");
 
-        final MessagePayload payload = new MessagePayload();
-        payload.setHostname("localhost");
-        payload.setLevel(MessagePayload.LEVEL_CRITICAL);
-        payload.setServiceName("Test Service Name");
-        payload.setMessage("Test Message");
-
-        Thread daemonThread = new Thread(new MockNscaDaemon());
-        daemonThread.start();
-        Thread.sleep(1000);
-        passiveAlerter.send(payload);
-    }
+		Thread daemonThread = new Thread(new MockNscaDaemon());
+		daemonThread.start();
+		Thread.sleep(1000);
+		passiveAlerter.send(payload);
+	}
 }

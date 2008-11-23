@@ -30,8 +30,6 @@ public class MockNscaDaemon implements Runnable {
 			byte[] passiveCheckBytes = new byte[PASSIVE_CHECK_SIZE];
 			inputStream.readFully(passiveCheckBytes, 0, PASSIVE_CHECK_SIZE);
 			
-			//TODO: Check all parts are sent OK
-
 			clientSocket.close();
 			serverSocket.close();
 		} catch (IOException e) {
