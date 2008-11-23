@@ -13,7 +13,10 @@
  */
 package com.googlecode.jsendnsca.sender;
 
+import java.net.SocketTimeoutException;
+
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import com.googlecode.jsendnsca.mocks.MockNscaDaemon;
 
@@ -45,9 +48,34 @@ public class NagiosPassiveCheckSenderTest {
 		payload.setServiceName("Test Service Name");
 		payload.setMessage("Test Message");
 
-		Thread daemonThread = new Thread(new MockNscaDaemon());
+		final Thread daemonThread = new Thread(new MockNscaDaemon());
 		daemonThread.start();
 		Thread.sleep(1000);
 		passiveAlerter.send(payload);
+	}
+	
+	@Test
+	public void shouldTimeoutWhenSendingPassiveCheck() throws Exception {
+		final NagiosSettings nagiosSettings = new NagiosSettings();
+		nagiosSettings.setTimeout(1000);
+
+		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
+
+		final MessagePayload payload = new MessagePayload();
+		payload.setHostname("localhost");
+		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
+		payload.setServiceName("Test Service Name");
+		payload.setMessage("Test Message");
+
+		final MockNscaDaemon mockNscaDaemon = new MockNscaDaemon();
+		mockNscaDaemon.setSimulateTimeout(true);
+		final Thread daemonThread = new Thread(mockNscaDaemon);
+		daemonThread.start();
+		Thread.sleep(1000);
+		try {
+			passiveAlerter.send(payload);
+		} catch (NagiosException ne) {
+			assertTrue(ne.getCause() instanceof SocketTimeoutException);
+		}
 	}
 }
