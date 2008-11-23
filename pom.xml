@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.googlecode.jsendnsca</groupId>
@@ -7,6 +8,14 @@
 	<version>1.0</version>
 	<name>jsendnsca</name>
 	<url>http://code.google.com/p/jsendnsca/</url>
+	<scm>
+		<connection>scm:svn:https://jsendnsca.googlecode.com/svn</connection>
+		<developerConnection>
+			scm:svn:https://jsendnsca.googlecode.com/svn
+		</developerConnection>
+		<tag>HEAD</tag>
+		<url>http://code.google.com/p/jsendnsca/source/browse/</url>
+	</scm>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -68,9 +77,12 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete dir="${basedir}/bin" includeEmptyDirs="true" includes="**/*" />
-								<delete dir="${basedir}/docs" includeEmptyDirs="true" includes="**/*" />
-								<delete dir="${basedir}/dist" includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/bin"
+									includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/docs"
+									includeEmptyDirs="true" includes="**/*" />
+								<delete dir="${basedir}/dist"
+									includeEmptyDirs="true" includes="**/*" />
 							</tasks>
 						</configuration>
 					</execution>
@@ -98,8 +110,10 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<tar destfile="${basedir}/dist/jsend-nsca-${version}.tar">
-									<tarfileset dir="${basedir}" preserveLeadingSlashes="true">
+								<tar
+									destfile="${basedir}/dist/jsend-nsca-${version}.tar">
+									<tarfileset dir="${basedir}"
+										preserveLeadingSlashes="true">
 										<include name="bin/**/*" />
 										<include name="docs/**/*" />
 										<include name="target/**/*.jar" />
@@ -107,9 +121,13 @@
 										<include name="pom.xml" />
 									</tarfileset>
 								</tar>
-								<gzip src="${basedir}/dist/jsend-nsca-${version}.tar" destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz" />
-								<delete file="${basedir}/dist/jsend-nsca-${version}.tar" />
-								<zip destfile="${basedir}/dist/jsend-nsca-${version}.zip">
+								<gzip
+									src="${basedir}/dist/jsend-nsca-${version}.tar"
+									destfile="${basedir}/dist/jsend-nsca-${version}.tar.gz" />
+								<delete
+									file="${basedir}/dist/jsend-nsca-${version}.tar" />
+								<zip
+									destfile="${basedir}/dist/jsend-nsca-${version}.zip">
 									<zipfileset dir="${basedir}">
 										<include name="bin/**/*" />
 										<include name="docs/**/*" />
@@ -143,11 +161,15 @@
 				</executions>
 				<configuration>
 					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
+						<descriptorRef>
+							jar-with-dependencies
+						</descriptorRef>
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>com.googlecode.jsendnsca.Main</mainClass>
+							<mainClass>
+								com.googlecode.jsendnsca.Main
+							</mainClass>
 						</manifest>
 					</archive>
 					<finalName>jsendnsca</finalName>
@@ -168,7 +190,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<reportOutputDirectory>${basedir}/docs</reportOutputDirectory>
+					<reportOutputDirectory>
+						${basedir}/docs
+					</reportOutputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
