@@ -37,8 +37,10 @@ public class NagiosSettings {
     private String password = "hasturrocks";
     private int timeout = 10000;
     private int encryptionMethod = XOR_ENCRYPTION;
+    private int connectTimeout = 5000;
 
-    /**
+
+	/**
      * The host or IP of the Nagios host running the NSCA add-on
      * 
      * @return the host or IP, defaults to localhost
@@ -137,5 +139,23 @@ public class NagiosSettings {
 			throw new UnsupportedOperationException("Currently only NO_ENCRYPTION or XOR_ENCRYPTION Supported");
 		}
 		this.encryptionMethod = encryptionMethod;
+	}
+
+	/**
+	 * The connection timeout
+	 * 
+	 * @return the timeout in milliseconds, default is 5000 ms
+	 */
+	public int getConnectTimeout() {
+		return connectTimeout;
+	}
+	
+	/**
+	 * Set the connection timeout, default is 5000 ms if unset
+	 * 
+	 * @param connectTimeout the timeout in milliseconds
+	 */
+	public void setConnectTimeout(int connectTimeout) {
+		this.connectTimeout = connectTimeout;
 	}
 }

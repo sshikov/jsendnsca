@@ -16,7 +16,9 @@ package com.googlecode.jsendnsca.sender;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.zip.CRC32;
 
@@ -66,13 +68,14 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 			throw new IllegalArgumentException("payload cannot be null");
 		}
 		
-		Socket socket = null;
+		final Socket socket = new Socket();
 		OutputStream outputStream = null;
 		DataInputStream inputStream = null;
 
 		// connect and get streams
+		final SocketAddress nagiosEndpoint = new InetSocketAddress(nagiosSettings.getNagiosHost(),nagiosSettings.getPort());
 		try {
-			socket = new Socket(nagiosSettings.getNagiosHost(), nagiosSettings.getPort());
+			socket.connect(nagiosEndpoint, nagiosSettings.getConnectTimeout());
 			socket.setSoTimeout(nagiosSettings.getTimeout());
 			outputStream = socket.getOutputStream();
 			inputStream = new DataInputStream(socket.getInputStream());
