@@ -22,20 +22,20 @@
 		<delete dir="${dist}" />
 	</target>
 
-	<target name="init">
+	<target name="-init">
 		<mkdir dir="${target}" />
 		<mkdir dir="${classes}" />
 		<mkdir dir="${test-classes}" />
 		<mkdir dir="${test-reports}" />
 	</target>
 
-	<target name="compile" depends="init" description="compile the source ">
+	<target name="compile" depends="-init" description="compile the source ">
 		<javac srcdir="${source}" destdir="${classes}">
 			<classpath refid="class-path" />
 		</javac>
 	</target>
 
-	<target name="test-compile" depends="compile" description="compile the test source ">
+	<target name="-test-compile" depends="compile" description="compile the test source ">
 		<javac srcdir="${test-source}" destdir="${test-classes}">
 			<classpath>
 				<path refid="class-path" />
@@ -45,7 +45,7 @@
 		</javac>
 	</target>
 
-	<target name="test" depends="test-compile" description="run tests">
+	<target name="test" depends="-test-compile" description="run tests">
 		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
 			<classpath>
 				<path refid="class-path" />
