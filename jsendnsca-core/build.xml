@@ -1,0 +1,69 @@
+<project name="jsendnsca-core" default="dist" basedir=".">
+	<description>jsend-nsca core build</description>
+	<property name="source" location="src/main/java" />
+	<property name="test-source" location="src/test/java" />
+	<property name="target" location="target" />
+	<property name="classes" location="target/classes" />
+	<property name="test-classes" location="target/test-classes" />
+	<property name="test-reports" location="target/test-reports" />
+	<property name="dist" location="dist" />
+
+	<path id="class-path">
+		<pathelement location="lib/commons-lang-2.4.jar" />
+		<pathelement location="lib/commons-io-1.4.jar" />
+	</path>
+
+	<path id="test-class-path">
+		<pathelement location="lib/junit-4.5.jar" />
+	</path>
+
+	<target name="clean" description="clean up">
+		<delete dir="${target}" />
+		<delete dir="${dist}" />
+	</target>
+
+	<target name="init">
+		<mkdir dir="${target}" />
+		<mkdir dir="${classes}" />
+		<mkdir dir="${test-classes}" />
+		<mkdir dir="${test-reports}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<javac srcdir="${source}" destdir="${classes}">
+			<classpath refid="class-path" />
+		</javac>
+	</target>
+
+	<target name="test-compile" depends="compile" description="compile the test source ">
+		<javac srcdir="${test-source}" destdir="${test-classes}">
+			<classpath>
+				<path refid="class-path" />
+				<path refid="test-class-path" />
+				<pathelement location="${classes}" />
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="test" depends="test-compile" description="run tests">
+		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+			<classpath>
+				<path refid="class-path" />
+				<path refid="test-class-path" />
+				<pathelement location="${classes}" />
+				<pathelement location="${test-classes}" />
+			</classpath>
+			<batchtest fork="yes" todir="${test-reports}">
+				<formatter type="xml" />
+				<fileset dir="${test-source}">
+					<include name="**/*Test*.java" />
+				</fileset>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="dist" depends="test" description="generate the distribution">
+		<mkdir dir="${dist}" />
+		<jar jarfile="${dist}/jsend-nsca.jar" basedir="${classes}" />
+	</target>
+</project>
