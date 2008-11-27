@@ -6,25 +6,29 @@
 	<property name="classes" location="target/classes" />
 	<property name="test-classes" location="target/test-classes" />
 	<property name="test-reports" location="target/test-reports" />
-	<property name="dist" location="bin" />
+	<property name="lib" location="lib" />
 
 	<target name="-build-core" description="build jsendnsca-core project as required by this project">
-		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false"/>
+		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" />
 	</target>
-	
+
 	<path id="class-path">
 		<pathelement location="../jsendnsca-core/target/classes" />
-		<pathelement location="lib/commons-lang-2.4.jar" />
-		<pathelement location="lib/commons-cli-1.1.jar" />
+		<pathelement location="${lib}/commons-lang-2.4.jar" />
+		<pathelement location="${lib}/commons-cli-1.1.jar" />
 	</path>
 
 	<path id="test-class-path">
-		<pathelement location="lib/junit-4.5.jar" />
+		<pathelement location="${lib}/junit-4.5.jar" />
 	</path>
 
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
-		<delete dir="${dist}" />
+		<delete dir="${lib}" >
+			<exclude name="commons-cli-1.1.jar"/>
+			<exclude name="commons-lang-2.4.jar"/>
+			<exclude name="junit-4.5.jar"/>
+		</delete>
 	</target>
 
 	<target name="-init">
@@ -66,9 +70,17 @@
 			</batchtest>
 		</junit>
 	</target>
-
+	
 	<target name="dist" depends="test" description="generate the distribution">
-		<mkdir dir="${dist}" />
-		<jar jarfile="${dist}/jsend-nsca-cli.jar" basedir="${classes}" />
+		<jar jarfile="${lib}/jsend-nsca-cli.jar" basedir="${classes}" />
+		<copy todir="${lib}">
+			<fileset dir="../jsendnsca-core/lib">
+				<include name="*.jar" />
+				<exclude name="junit-4.5.jar" />
+			</fileset>
+			<fileset dir="../jsendnsca-core/dist">
+				<include name="*.jar" />
+			</fileset>
+		</copy>
 	</target>
 </project>
