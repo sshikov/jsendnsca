@@ -20,7 +20,7 @@ The current tool set is used for development is as follows
 You can checkout the source code from SVN command line
 
 {{{
-svn co http://jsendnsca.googlecode.com/svn/trunk/ jsendnsca
+svn co https://jsendnsca.googlecode.com/svn/branches/1.0 jsendnsca
 }}}
 
 Otherwise, you can use Subversive within eclipse to check out
@@ -36,6 +36,4 @@ C:\Projects\jsendnsca>mvn clean install
 This will compile the source, build the jars and create the bin, docs and dist directories.
 
  
-
-
 
