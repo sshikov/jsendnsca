@@ -78,6 +78,8 @@
 			<zipfileset dir="lib" prefix="lib">
 				<exclude name="junit-4.5.jar" />
 			</zipfileset>
+			<zipfileset dir="${source}" prefix="src/main/java" />
+			<zipfileset dir="${test-source}" prefix="src/test/java" />
 		</zip>
 		<tar destfile="${packages}/jsendnsca-core.tar.gz" compression="gzip">
 			<tarfileset dir="${target}">
@@ -87,6 +89,8 @@
 			<tarfileset dir="lib" prefix="lib" preserveLeadingSlashes="true">
 				<exclude name="junit-4.5.jar" />
 			</tarfileset>
+			<tarfileset dir="${source}" prefix="src/main/java" preserveLeadingSlashes="true" />
+			<tarfileset dir="${test-source}" prefix="src/test/java" preserveLeadingSlashes="true" />
 		</tar>
 	</target>
 </project>
