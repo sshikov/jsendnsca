@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export CLASSPATH=../lib/jsend-nsca-cli.jar
+export CLASSPATH=jsend-nsca-cli.jar
 export CLASSPATH=$CLASSPATH:../lib/jsend-nsca.jar
 export CLASSPATH=$CLASSPATH:../lib/commons-cli-1.1.jar
 export CLASSPATH=$CLASSPATH:../lib/commons-lang-2.4.jar

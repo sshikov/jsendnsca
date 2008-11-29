@@ -1,12 +1,17 @@
 <project name="jsendnsca-cli" default="dist" basedir=".">
 	<description>jsend-nsca cli build</description>
 	<property name="source" location="src/main/java" />
+	<property name="scripts" location="src/main/bin" />
 	<property name="test-source" location="src/test/java" />
 	<property name="target" location="target" />
-	<property name="classes" location="target/classes" />
-	<property name="test-classes" location="target/test-classes" />
-	<property name="test-reports" location="target/test-reports" />
+	<property name="classes" location="${target}/classes" />
+	<property name="test-classes" location="${target}/test-classes" />
+	<property name="test-reports" location="${target}/test-reports" />
+	<property name="jarfile" location="${target}/jsendnsca-cli.jar" />
 	<property name="lib" location="lib" />
+	<property name="dist-lib" location="${target}/lib" />
+	<property name="dist-bin" location="${target}/bin" />
+	<property name="packages" location="packages" />
 
 	<target name="-build-core" description="build jsendnsca-core project as required by this project">
 		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" />
@@ -24,10 +29,10 @@
 
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
-		<delete dir="${lib}" >
-			<exclude name="commons-cli-1.1.jar"/>
-			<exclude name="commons-lang-2.4.jar"/>
-			<exclude name="junit-4.5.jar"/>
+		<delete dir="${lib}">
+			<exclude name="commons-cli-1.1.jar" />
+			<exclude name="commons-lang-2.4.jar" />
+			<exclude name="junit-4.5.jar" />
 		</delete>
 	</target>
 
@@ -36,6 +41,9 @@
 		<mkdir dir="${classes}" />
 		<mkdir dir="${test-classes}" />
 		<mkdir dir="${test-reports}" />
+		<mkdir dir="${dist-lib}" />
+		<mkdir dir="${dist-bin}" />
+		<mkdir dir="${packages}" />
 	</target>
 
 	<target name="compile" depends="-build-core,-init" description="compile the source ">
@@ -70,17 +78,38 @@
 			</batchtest>
 		</junit>
 	</target>
-	
+
 	<target name="dist" depends="test" description="generate the distribution">
-		<jar jarfile="${lib}/jsend-nsca-cli.jar" basedir="${classes}" />
-		<copy todir="${lib}">
+		<jar jarfile="${target}/jsend-nsca-cli.jar" basedir="${classes}" />
+		<copy todir="${dist-lib}">
 			<fileset dir="../jsendnsca-core/lib">
 				<include name="*.jar" />
 				<exclude name="junit-4.5.jar" />
 			</fileset>
-			<fileset dir="../jsendnsca-core/dist">
+			<fileset dir="${lib}">
+				<include name="*.jar" />
+				<exclude name="junit-4.5.jar" />
+			</fileset>
+			<fileset dir="../jsendnsca-core/target">
 				<include name="*.jar" />
 			</fileset>
 		</copy>
+		<copy todir="${dist-bin}">
+			<fileset dir="${scripts}" />
+		</copy>
+		<zip destfile="${packages}/jsend-nsca-cli.zip" update="false">
+			<zipfileset dir="${target}" prefix="bin">
+				<include name="*.jar" />
+			</zipfileset>
+			<zipfileset dir="${dist-bin}" prefix="bin" />
+			<zipfileset dir="${dist-lib}" prefix="lib">
+				<exclude name="junit-4.5.jar" />
+			</zipfileset>
+			<zipfileset dir="${source}" prefix="src/main/java" />
+			<zipfileset dir="${test-source}" prefix="src/main/java" />
+			<zipfileset dir="${basedir}">
+				<include name="build.xml"/>
+			</zipfileset>
+		</zip>
 	</target>
 </project>
