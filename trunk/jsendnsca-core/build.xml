@@ -1,12 +1,15 @@
-<project name="jsendnsca-core" default="dist" basedir=".">
+<project name="jsendnsca-core" default="packaging" basedir=".">
 	<description>jsend-nsca core build</description>
 	<property name="source" location="src/main/java" />
 	<property name="test-source" location="src/test/java" />
 	<property name="target" location="target" />
-	<property name="classes" location="target/classes" />
-	<property name="test-classes" location="target/test-classes" />
-	<property name="test-reports" location="target/test-reports" />
-	<property name="dist" location="dist" />
+	<property name="classes" location="${target}/classes" />
+	<property name="test-classes" location="${target}/test-classes" />
+	<property name="test-reports" location="${target}/test-reports" />
+	<property name="docs" location="${target}/docs/api" />
+	<property name="version" location="1.1" />
+	<property name="jarfile" location="${target}/jsend-nsca.jar" />
+	<property name="packages" location="packages" />
 
 	<path id="class-path">
 		<pathelement location="lib/commons-lang-2.4.jar" />
@@ -19,7 +22,7 @@
 
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
-		<delete dir="${dist}" />
+		<delete dir="${packages}" />
 	</target>
 
 	<target name="-init">
@@ -27,6 +30,8 @@
 		<mkdir dir="${classes}" />
 		<mkdir dir="${test-classes}" />
 		<mkdir dir="${test-reports}" />
+		<mkdir dir="${docs}" />
+		<mkdir dir="${packages}" />
 	</target>
 
 	<target name="compile" depends="-init" description="compile the source ">
@@ -62,8 +67,26 @@
 		</junit>
 	</target>
 
-	<target name="dist" depends="test" description="generate the distribution">
-		<mkdir dir="${dist}" />
-		<jar jarfile="${dist}/jsend-nsca.jar" basedir="${classes}" />
+	<target name="packaging" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
+		<jar jarfile="${jarfile}" basedir="${classes}" />
+		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
+		<zip destfile="${packages}/jsendnsca-core.zip" update="false">
+			<zipfileset dir="${target}">
+				<include name="*.jar" />
+				<include name="docs/**/*" />
+			</zipfileset>
+			<zipfileset dir="lib" prefix="lib">
+				<exclude name="junit-4.5.jar" />
+			</zipfileset>
+		</zip>
+		<tar destfile="${packages}/jsendnsca-core.tar.gz" compression="gzip">
+			<tarfileset dir="${target}">
+				<include name="*.jar" />
+				<include name="docs/**/*" />
+			</tarfileset>
+			<tarfileset dir="lib" prefix="lib" preserveLeadingSlashes="true">
+				<exclude name="junit-4.5.jar" />
+			</tarfileset>
+		</tar>
 	</target>
 </project>
