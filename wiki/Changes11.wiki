@@ -1,0 +1,15 @@
+#summary Changes for 1.1
+
+= Changes for 1.1 =
+
+ * Code split into two parts, core API and CLI projects
+ * Connection timeout added
+ * Ant used as build tool instead of maven
+ * User and Developer guide created
+ * MockNscaDaemon added for unit testing socket code
+ * Encryption mode no longer hard coded to XOR, can now choose between No or XOR encryption
+ * Checking of illegal arguments where required
+ 
+= Known Issues =
+
+ * Currently only supports no or XOR "encryption"
