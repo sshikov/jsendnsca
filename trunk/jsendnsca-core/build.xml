@@ -8,7 +8,7 @@
 	<property name="test-reports" location="${target}/test-reports" />
 	<property name="docs" location="${target}/docs/api" />
 	<property name="version" location="1.1" />
-	<property name="jarfile" location="${target}/jsend-nsca.jar" />
+	<property name="jarfile" location="${target}/jsendnsca-core.jar" />
 	<property name="packages" location="packages" />
 
 	<path id="class-path">
