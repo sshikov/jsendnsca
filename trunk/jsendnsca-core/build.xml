@@ -8,7 +8,7 @@
 	<property name="test-reports" location="${target}/test-reports" />
 	<property name="docs" location="${target}/docs/api" />
 	<property name="version" location="1.1" />
-	<property name="jarfile" location="${target}/jsendnsca-core.jar" />
+	<property name="jarfile" location="${target}/jsendnsca-core-1.1.jar" />
 	<property name="packages" location="packages" />
 
 	<path id="class-path">
@@ -70,7 +70,7 @@
 	<target name="packaging" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
 		<jar jarfile="${jarfile}" basedir="${classes}" />
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
-		<zip destfile="${packages}/jsendnsca-core.zip" update="false">
+		<zip destfile="${packages}/jsendnsca-core-1.1.zip" update="false">
 			<zipfileset dir="${target}">
 				<include name="*.jar" />
 				<include name="docs/**/*" />
@@ -79,7 +79,7 @@
 				<exclude name="junit-4.5.jar" />
 			</zipfileset>
 		</zip>
-		<tar destfile="${packages}/jsendnsca-core.tar.gz" compression="gzip">
+		<tar destfile="${packages}/jsendnsca-core-1.1.tar.gz" compression="gzip">
 			<tarfileset dir="${target}">
 				<include name="*.jar" />
 				<include name="docs/**/*" />
