@@ -157,6 +157,11 @@ public class NagiosSettings {
 		return connectTimeout;
 	}
 
+	/**
+	 * Set the connection timeout, default is 5000 ms
+	 * 
+	 * @param connectTimeout timeout in ms
+	 */
 	public void setConnectTimeout(int connectTimeout) {
 		this.connectTimeout = connectTimeout;
 	}
