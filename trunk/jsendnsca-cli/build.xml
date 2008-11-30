@@ -1,4 +1,4 @@
-<project name="jsendnsca-cli" default="dist" basedir=".">
+<project name="jsendnsca-cli" default="packaging" basedir=".">
 	<description>jsend-nsca cli build</description>
 	<property name="source" location="src/main/java" />
 	<property name="scripts" location="src/main/bin" />
@@ -14,7 +14,8 @@
 	<property name="packages" location="packages" />
 
 	<target name="-build-core" description="build jsendnsca-core project as required by this project">
-		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" />
+		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" target="clean" />
+		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" target="packaging" />
 	</target>
 
 	<path id="class-path">
@@ -29,11 +30,7 @@
 
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
-		<delete dir="${lib}">
-			<exclude name="commons-cli-1.1.jar" />
-			<exclude name="commons-lang-2.4.jar" />
-			<exclude name="junit-4.5.jar" />
-		</delete>
+		<delete dir="${packages}" />
 	</target>
 
 	<target name="-init">
@@ -79,8 +76,8 @@
 		</junit>
 	</target>
 
-	<target name="dist" depends="test" description="generate the distribution">
-		<jar jarfile="${target}/jsend-nsca-cli.jar" basedir="${classes}" />
+	<target name="packaging" depends="test" description="generate the distribution">
+		<jar jarfile="${target}/jsendnsca-cli.jar" basedir="${classes}" />
 		<copy todir="${dist-lib}">
 			<fileset dir="../jsendnsca-core/lib">
 				<include name="*.jar" />
@@ -97,7 +94,7 @@
 		<copy todir="${dist-bin}">
 			<fileset dir="${scripts}" />
 		</copy>
-		<zip destfile="${packages}/jsend-nsca-cli.zip" update="false">
+		<zip destfile="${packages}/jsendnsca-cli.zip" update="false">
 			<zipfileset dir="${target}" prefix="bin">
 				<include name="*.jar" />
 			</zipfileset>
@@ -105,11 +102,15 @@
 			<zipfileset dir="${dist-lib}" prefix="lib">
 				<exclude name="junit-4.5.jar" />
 			</zipfileset>
-			<zipfileset dir="${source}" prefix="src/main/java" />
-			<zipfileset dir="${test-source}" prefix="src/main/java" />
-			<zipfileset dir="${basedir}">
-				<include name="build.xml"/>
-			</zipfileset>
 		</zip>
+		<tar destfile="${packages}/jsendnsca-cli.tar.gz" compression="gzip">
+			<tarfileset dir="${target}" prefix="bin" preserveLeadingSlashes="true">
+				<include name="*.jar" />
+			</tarfileset>
+			<tarfileset dir="${dist-bin}" prefix="bin" preserveLeadingSlashes="true"/>
+			<tarfileset dir="${dist-lib}" prefix="lib" preserveLeadingSlashes="true">
+				<exclude name="junit-4.5.jar" />
+			</tarfileset>
+		</tar>
 	</target>
 </project>
