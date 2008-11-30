@@ -5,4 +5,4 @@
 
 PDF Documentation is available at the following link
 
-http://jsendnsca.googlecode.com/svn/jsendnsca-docs/JSend NSCA User & Developer Guide.pdf
+http://jsendnsca.googlecode.com/svn/jsendnsca-docs/JSend%20NSCA%20User%20&%20Developer%20Guide.pdf
