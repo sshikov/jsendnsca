@@ -1,8 +1,0 @@
-#summary Documentation
-#labels Version-1.1,Featured,Phase-Implementation
-
-= Documentation =
-
-PDF Documentation is available at the following link
-
-http://jsendnsca.googlecode.com/svn/jsendnsca-docs/JSend%20NSCA%20User%20&%20Developer%20Guide.pdf
