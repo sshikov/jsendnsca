@@ -17,7 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
 
-import org.apache.commons.lang.StringUtils;
+import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
  * The Passive Check Message Payload

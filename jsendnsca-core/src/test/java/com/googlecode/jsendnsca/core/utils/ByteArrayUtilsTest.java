@@ -2,7 +2,6 @@ package com.googlecode.jsendnsca.core.utils;
 
 import static org.junit.Assert.*;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 public class ByteArrayUtilsTest {

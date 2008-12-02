@@ -13,8 +13,6 @@
  */
 package com.googlecode.jsendnsca.core.utils;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * Utility methods for writing to a byte array
  * 
@@ -86,7 +84,7 @@ public class ByteArrayUtils {
     public static byte[] getFixedSizeBytes(int fixedSize, String value) {
         if (value == null)
             return null;
-        if (StringUtils.isEmpty(value))
+        if (StringUtils.isBlank(value))
             return new byte[fixedSize];
 
         final byte[] myBytes = new byte[fixedSize];

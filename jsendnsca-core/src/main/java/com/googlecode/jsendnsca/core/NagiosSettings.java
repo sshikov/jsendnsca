@@ -13,7 +13,7 @@
  */
 package com.googlecode.jsendnsca.core;
 
-import org.apache.commons.lang.StringUtils;
+import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
  * The settings to use for sending the Passive Check
