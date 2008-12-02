@@ -79,10 +79,6 @@
 	<target name="packaging" depends="test" description="generate the distribution">
 		<jar jarfile="${target}/jsendnsca-cli-1.1.jar" basedir="${classes}" />
 		<copy todir="${dist-lib}">
-			<fileset dir="../jsendnsca-core/lib">
-				<include name="*.jar" />
-				<exclude name="junit-4.5.jar" />
-			</fileset>
 			<fileset dir="${lib}">
 				<include name="*.jar" />
 				<exclude name="junit-4.5.jar" />
