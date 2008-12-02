@@ -21,10 +21,10 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.zip.CRC32;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.googlecode.jsendnsca.core.utils.ByteArrayUtils;
+import com.googlecode.jsendnsca.core.utils.IOUtils;
 
 /**
  * This class is used to send a Passive Check to the Nagios NSCA add-on
@@ -41,7 +41,6 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 	private static final short NSCA_VERSION = 3;
 
 	private NagiosSettings nagiosSettings;
-	
 
 	/**
 	 * Construct a new {@link NagiosPassiveCheckSender} with the provided
@@ -51,7 +50,7 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 	 *            the {@link NagiosSettings} to use to send the Passive Check
 	 */
 	public NagiosPassiveCheckSender(NagiosSettings nagiosSettings) {
-		if(nagiosSettings == null) {
+		if (nagiosSettings == null) {
 			throw new IllegalArgumentException("nagiosSettings cannot be null");
 		}
 		this.nagiosSettings = nagiosSettings;
@@ -60,21 +59,22 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.googlecode.jsendnsca.sender.INagiosPassiveCheckSender#send(com.googlecode.jsendnsca.sender.MessagePayload)
+	 * @see
+	 * com.googlecode.jsendnsca.sender.INagiosPassiveCheckSender#send(com.googlecode
+	 * .jsendnsca.sender.MessagePayload)
 	 */
 	public void send(MessagePayload payload) throws NagiosException, IOException {
-		if(payload == null) {
+		if (payload == null) {
 			throw new IllegalArgumentException("payload cannot be null");
 		}
-		
-		final Socket socket = new Socket();
-		final InetSocketAddress nagiosEndpoint = new InetSocketAddress(nagiosSettings.getNagiosHost(),nagiosSettings.getPort());
 
-		// connect and get streams
+		final Socket socket = new Socket();
+		final InetSocketAddress nagiosEndpoint = new InetSocketAddress(nagiosSettings.getNagiosHost(), nagiosSettings.getPort());
+
 		OutputStream outputStream = null;
 		DataInputStream inputStream = null;
 		try {
-			socket.connect(nagiosEndpoint,nagiosSettings.getConnectTimeout());
+			socket.connect(nagiosEndpoint, nagiosSettings.getConnectTimeout());
 			socket.setSoTimeout(nagiosSettings.getTimeout());
 			outputStream = socket.getOutputStream();
 			inputStream = new DataInputStream(socket.getInputStream());
@@ -107,10 +107,8 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 			// 2nd part, CRC
 			writeCRC(passiveCheckBytes);
 
-			if (nagiosSettings.getEncryptionMethod() == NagiosSettings.XOR_ENCRYPTION) {
-				encryptPayloadUsingXOR(passiveCheckBytes, initVector);
-			}
-			
+			encryptPayload(passiveCheckBytes, initVector, nagiosSettings.getEncryptionMethod());
+
 			outputStream.write(passiveCheckBytes, 0, passiveCheckBytes.length);
 			outputStream.flush();
 		} catch (SocketTimeoutException ste) {
@@ -147,23 +145,30 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 		ByteArrayUtils.writeInteger(passiveCheckBytes, (int) crc.getValue(), 4);
 	}
 
-	private void encryptPayloadUsingXOR(byte[] sendBuffer, byte[] initVector) {
-		for (int y = 0, x = 0; y < sendBuffer.length; y++, x++) {
-			if (x >= INITIALISATION_VECTOR_SIZE) {
-				x = 0;
-			}
-			sendBuffer[y] ^= initVector[x];
-		}
+	private void encryptPayload(byte[] sendBuffer, byte[] initVector, int encryptionMethod) {
 
-		if (StringUtils.isNotBlank(nagiosSettings.getPassword())) {
-			final byte[] passwordBytes = nagiosSettings.getPassword().getBytes();
-
+		switch (encryptionMethod) {
+		case NagiosSettings.XOR_ENCRYPTION:
 			for (int y = 0, x = 0; y < sendBuffer.length; y++, x++) {
-				if (x >= passwordBytes.length) {
+				if (x >= INITIALISATION_VECTOR_SIZE) {
 					x = 0;
 				}
-				sendBuffer[y] ^= passwordBytes[x];
+				sendBuffer[y] ^= initVector[x];
 			}
+
+			if (StringUtils.isNotBlank(nagiosSettings.getPassword())) {
+				final byte[] passwordBytes = nagiosSettings.getPassword().getBytes();
+
+				for (int y = 0, x = 0; y < sendBuffer.length; y++, x++) {
+					if (x >= passwordBytes.length) {
+						x = 0;
+					}
+					sendBuffer[y] ^= passwordBytes[x];
+				}
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }
