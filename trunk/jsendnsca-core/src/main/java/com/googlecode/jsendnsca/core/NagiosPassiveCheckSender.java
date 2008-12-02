@@ -21,10 +21,9 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.zip.CRC32;
 
-import org.apache.commons.lang.StringUtils;
-
 import com.googlecode.jsendnsca.core.utils.ByteArrayUtils;
 import com.googlecode.jsendnsca.core.utils.IOUtils;
+import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
  * This class is used to send a Passive Check to the Nagios NSCA add-on

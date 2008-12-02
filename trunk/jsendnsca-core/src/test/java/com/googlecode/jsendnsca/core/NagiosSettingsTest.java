@@ -1,7 +1,8 @@
 package com.googlecode.jsendnsca.core;
 
-import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
+
+import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 public class NagiosSettingsTest {
 
