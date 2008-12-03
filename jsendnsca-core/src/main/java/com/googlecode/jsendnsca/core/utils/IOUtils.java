@@ -19,9 +19,10 @@ package com.googlecode.jsendnsca.core.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 
 public class IOUtils {
-	
+
 	/**
 	 * Unconditionally close an <code>InputStream</code>.
 	 * <p>
@@ -43,8 +44,8 @@ public class IOUtils {
 	/**
 	 * Unconditionally close an <code>OutputStream</code>.
 	 * <p>
-	 * Equivalent to {@link OutputStream#close()}, except any exceptions will be
-	 * ignored. This is typically used in finally blocks.
+	 * Equivalent to {@link OutputStream#close()}, except any exceptions will
+	 * be ignored. This is typically used in finally blocks.
 	 * 
 	 * @param output
 	 *            the OutputStream to close, may be null or already closed
@@ -53,6 +54,24 @@ public class IOUtils {
 		try {
 			if (output != null) {
 				output.close();
+			}
+		} catch (IOException ignore) {
+		}
+	}
+
+	/**
+	 * Unconditionally close a <code>Socket</code>.
+	 * <p>
+	 * Equivalent to {@link Socket#close()}, except any exceptions will be
+	 * ignored. This is typically used in finally blocks.
+	 * 
+	 * @param socket
+	 *            the socket to close, may be null or already closed
+	 */
+	public static void closeQuietly(Socket socket) {
+		try {
+			if (socket != null) {
+				socket.close();
 			}
 		} catch (IOException ignore) {
 		}
