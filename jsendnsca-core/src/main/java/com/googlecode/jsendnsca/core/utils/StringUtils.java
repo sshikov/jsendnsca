@@ -19,7 +19,7 @@ package com.googlecode.jsendnsca.core.utils;
 public class StringUtils {
 	
 	private StringUtils() {
-		
+		//not to be constructed
 	}
 	
 	/**

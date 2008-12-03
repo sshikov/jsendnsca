@@ -23,6 +23,10 @@ import java.net.Socket;
 
 public class IOUtils {
 
+	private IOUtils() {
+		//not to be constructed
+	}
+	
 	/**
 	 * Unconditionally close an <code>InputStream</code>.
 	 * <p>
