@@ -18,6 +18,10 @@ package com.googlecode.jsendnsca.core.utils;
 
 public class StringUtils {
 	
+	private StringUtils() {
+		
+	}
+	
 	/**
      * The empty String <code>""</code>.
      * @since 2.0
