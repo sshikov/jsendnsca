@@ -166,14 +166,16 @@ public class MessagePayload {
 			throw new IllegalArgumentException(
 					"Level cannot be null or an empty String");
 		}
+		
+		level = level.toLowerCase();
 
-		if (level.equalsIgnoreCase("ok")) {
+		if (level.equals("ok")) {
 			this.level = LEVEL_OK;
-		} else if (level.equalsIgnoreCase("warning")) {
+		} else if (level.equals("warning")) {
 			this.level = LEVEL_WARNING;
-		} else if (level.equalsIgnoreCase("critical")) {
+		} else if (level.equals("critical")) {
 			this.level = LEVEL_CRITICAL;
-		} else if (level.equalsIgnoreCase("unknown")) {
+		} else if (level.equals("unknown")) {
 			this.level = LEVEL_UNKNOWN;
 		} else {
 			throw new IllegalArgumentException(MessageFormat.format(

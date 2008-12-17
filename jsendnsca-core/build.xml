@@ -1,4 +1,4 @@
-<project name="jsendnsca-core" default="packaging" basedir=".">
+<project name="jsendnsca-core" default="test" basedir=".">
 	<description>jsend-nsca core build</description>
 	<property name="source" location="src/main/java" />
 	<property name="test-source" location="src/test/java" />
