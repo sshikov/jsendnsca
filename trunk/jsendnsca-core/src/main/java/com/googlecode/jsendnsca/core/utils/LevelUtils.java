@@ -41,5 +41,9 @@ public class LevelUtils {
 
 		return descriptionLevelMap.get(level);
 	}
+	
+	public static boolean isValidLevel(int level) {
+		return descriptionLevelMap.containsValue(level);
+	}
 
 }
