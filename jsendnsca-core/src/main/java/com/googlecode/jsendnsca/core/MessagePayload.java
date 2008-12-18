@@ -15,6 +15,7 @@ package com.googlecode.jsendnsca.core;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.MessageFormat;
 
 import com.googlecode.jsendnsca.core.utils.LevelUtils;
 import com.googlecode.jsendnsca.core.utils.StringUtils;
@@ -151,6 +152,9 @@ public class MessagePayload {
 	 *            the level, use the constant field values LEVEL_...
 	 */
 	public void setLevel(int level) {
+		if (!LevelUtils.isValidLevel(level)) {
+			throw new IllegalArgumentException(MessageFormat.format("[{0}] is not a valid level", level));
+		}
 		this.level = level;
 	}
 

@@ -28,4 +28,9 @@ public class LevelUtilsTest {
 	public void shouldThrowIllegalArgumentExceptionForNullLevel() throws Exception {
 		LevelUtils.getLevel(null);
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void shouldThrowIllegalArgumentExceptionForEmptyLevel() throws Exception {
+		LevelUtils.getLevel(StringUtils.EMPTY);
+	}
 }
