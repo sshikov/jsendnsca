@@ -25,7 +25,7 @@ public class LevelUtils {
 	 * 
 	 * @param level
 	 *            either ok, warning, critical or unknown
-	 * @return
+	 * @return the integer value of the level
 	 */
 	public static int getLevel(String level) {
 		if (StringUtils.isBlank(level)) {
