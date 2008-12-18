@@ -78,7 +78,7 @@ public class MessagePayloadTest {
             messagePayload.setLevel("foobar");
             fail("Should throw an IllegalArgumentException");
         } catch (IllegalArgumentException e) {
-            assertEquals("Level [foobar] is not recognised", e.getMessage());
+            assertEquals("[foobar] is not valid level", e.getMessage());
         }
     }
     

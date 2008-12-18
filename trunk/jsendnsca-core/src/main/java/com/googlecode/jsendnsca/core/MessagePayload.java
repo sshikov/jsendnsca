@@ -15,8 +15,8 @@ package com.googlecode.jsendnsca.core;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.MessageFormat;
 
+import com.googlecode.jsendnsca.core.utils.LevelUtils;
 import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
@@ -162,26 +162,7 @@ public class MessagePayload {
 	 *            either "ok", "warning", "critical" or "unknown"
 	 */
 	public void setLevel(String level) {
-		if (StringUtils.isBlank(level)) {
-			throw new IllegalArgumentException(
-					"Level cannot be null or an empty String");
-		}
-		
-		level = level.toLowerCase();
-
-		if (level.equals("ok")) {
-			this.level = LEVEL_OK;
-		} else if (level.equals("warning")) {
-			this.level = LEVEL_WARNING;
-		} else if (level.equals("critical")) {
-			this.level = LEVEL_CRITICAL;
-		} else if (level.equals("unknown")) {
-			this.level = LEVEL_UNKNOWN;
-		} else {
-			throw new IllegalArgumentException(MessageFormat.format(
-					"Level [{0}] is not recognised", level));
-		}
-
+		this.level = LevelUtils.getLevel(level);
 	}
 
 	/**
