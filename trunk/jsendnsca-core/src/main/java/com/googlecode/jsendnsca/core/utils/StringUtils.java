@@ -16,6 +16,12 @@
  */
 package com.googlecode.jsendnsca.core.utils;
 
+/**
+ * String utility methods
+ * 
+ * @author Raj.Patel
+ * @since 1.1.1
+ */
 public class StringUtils {
 	
 	private StringUtils() {

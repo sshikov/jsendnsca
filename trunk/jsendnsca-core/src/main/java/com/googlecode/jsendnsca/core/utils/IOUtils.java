@@ -21,12 +21,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+/**
+ * Utility IO methods
+ * 
+ * @author Raj.Patel
+ * @since 1.1.1
+ */
 public class IOUtils {
 
 	private IOUtils() {
-		//not to be constructed
+		// not to be constructed
 	}
-	
+
 	/**
 	 * Unconditionally close an <code>InputStream</code>.
 	 * <p>
@@ -48,8 +54,8 @@ public class IOUtils {
 	/**
 	 * Unconditionally close an <code>OutputStream</code>.
 	 * <p>
-	 * Equivalent to {@link OutputStream#close()}, except any exceptions will
-	 * be ignored. This is typically used in finally blocks.
+	 * Equivalent to {@link OutputStream#close()}, except any exceptions will be
+	 * ignored. This is typically used in finally blocks.
 	 * 
 	 * @param output
 	 *            the OutputStream to close, may be null or already closed
