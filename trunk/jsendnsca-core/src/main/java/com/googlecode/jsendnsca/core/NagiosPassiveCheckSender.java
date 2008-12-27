@@ -22,8 +22,8 @@ import java.net.SocketTimeoutException;
 import java.util.zip.CRC32;
 
 import com.googlecode.jsendnsca.core.utils.ByteArrayUtils;
+import com.googlecode.jsendnsca.core.utils.EncryptionUtils;
 import com.googlecode.jsendnsca.core.utils.IOUtils;
-import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
  * This class is used to send a Passive Check to the Nagios NSCA add-on
@@ -106,7 +106,7 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 			// 2nd part, CRC
 			writeCRC(passiveCheckBytes);
 
-			encryptPayload(passiveCheckBytes, initVector, nagiosSettings.getEncryptionMethod());
+			EncryptionUtils.encrypt(passiveCheckBytes, initVector, nagiosSettings);
 
 			outputStream.write(passiveCheckBytes, 0, passiveCheckBytes.length);
 			outputStream.flush();
@@ -137,32 +137,5 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 		final CRC32 crc = new CRC32();
 		crc.update(passiveCheckBytes);
 		ByteArrayUtils.writeInteger(passiveCheckBytes, (int) crc.getValue(), 4);
-	}
-
-	private void encryptPayload(byte[] sendBuffer, byte[] initVector, int encryptionMethod) {
-
-		switch (encryptionMethod) {
-		case NagiosSettings.XOR_ENCRYPTION:
-			for (int y = 0, x = 0; y < sendBuffer.length; y++, x++) {
-				if (x >= INITIALISATION_VECTOR_SIZE) {
-					x = 0;
-				}
-				sendBuffer[y] ^= initVector[x];
-			}
-
-			if (StringUtils.isNotBlank(nagiosSettings.getPassword())) {
-				final byte[] passwordBytes = nagiosSettings.getPassword().getBytes();
-
-				for (int y = 0, x = 0; y < sendBuffer.length; y++, x++) {
-					if (x >= passwordBytes.length) {
-						x = 0;
-					}
-					sendBuffer[y] ^= passwordBytes[x];
-				}
-			}
-			break;
-		default:
-			break;
-		}
 	}
 }
