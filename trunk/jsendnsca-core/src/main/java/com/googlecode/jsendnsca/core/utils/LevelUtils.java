@@ -42,8 +42,17 @@ public class LevelUtils {
 		return descriptionLevelMap.get(level);
 	}
 	
+	/**
+	 * Returns true if level is valid
+	 * 
+	 * @param level the level
+	 * @return true if valid
+	 */
 	public static boolean isValidLevel(int level) {
-		return descriptionLevelMap.containsValue(level);
+		if(0 >= level || level <= 3) {
+			return true;
+		}
+		return false;
 	}
 
 }
