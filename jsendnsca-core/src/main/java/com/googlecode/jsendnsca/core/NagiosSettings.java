@@ -13,6 +13,7 @@
  */
 package com.googlecode.jsendnsca.core;
 
+import com.googlecode.jsendnsca.core.utils.EncryptionUtils;
 import com.googlecode.jsendnsca.core.utils.StringUtils;
 
 /**
@@ -27,6 +28,7 @@ public class NagiosSettings {
 	 * No encryption
 	 */
 	public static final int NO_ENCRYPTION = 0;
+	
 	/**
 	 * XOR encryption
 	 */
@@ -140,8 +142,7 @@ public class NagiosSettings {
 	 *            the method
 	 */
 	public void setEncryptionMethod(int encryptionMethod) {
-		if (encryptionMethod != NO_ENCRYPTION
-				&& encryptionMethod != XOR_ENCRYPTION) {
+		if (!EncryptionUtils.isEncryptionMethodSupported(encryptionMethod)) {
 			throw new UnsupportedOperationException(
 					"Currently only NO_ENCRYPTION or XOR_ENCRYPTION Supported");
 		}
