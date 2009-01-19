@@ -14,6 +14,7 @@
 package com.googlecode.jsendnsca.core;
 
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import org.junit.Test;
 
@@ -31,6 +32,15 @@ public class NagiosPassiveCheckSenderTest {
 		final NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(new NagiosSettings());
 
 		sender.send(null);
+	}
+	
+	@Test(expected=UnknownHostException.class)
+	public void shouldThrowUnknownHostExceptionOnUnknownHost() throws Exception {
+		NagiosSettings nagiosSettings = new NagiosSettings();
+		nagiosSettings.setNagiosHost("foobar");
+		final NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(nagiosSettings);
+		
+		sender.send(new MessagePayload());
 	}
 
 	@Test
