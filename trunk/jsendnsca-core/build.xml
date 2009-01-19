@@ -10,6 +10,7 @@
 	<property name="version" location="1.1" />
 	<property name="jarfile" location="${target}/jsendnsca-core-1.1.jar" />
 	<property name="packages" location="packages" />
+	<property name="site" location="${target}/test-site" />
 
 	<path id="test-class-path">
 		<pathelement location="lib/junit-4.5.jar" />
@@ -27,6 +28,7 @@
 		<mkdir dir="${test-reports}" />
 		<mkdir dir="${docs}" />
 		<mkdir dir="${packages}" />
+		<mkdir dir="${site}" />
 	</target>
 
 	<target name="compile" depends="-init" description="compile the source ">
@@ -56,6 +58,13 @@
 				</fileset>
 			</batchtest>
 		</junit>
+		<mkdir dir="" />
+		<junitreport todir="${site}">
+			<fileset dir="${test-reports}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${site}" />
+		</junitreport>
 	</target>
 
 	<target name="packaging" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
