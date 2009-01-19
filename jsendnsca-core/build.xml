@@ -6,11 +6,12 @@
 	<property name="classes" location="${target}/classes" />
 	<property name="test-classes" location="${target}/test-classes" />
 	<property name="test-reports" location="${target}/test-reports" />
-	<property name="docs" location="${target}/docs/api" />
+	<property name="site" location="${target}/site" />
+	<property name="docs" location="${site}/javadocs" />
+	<property name="test-html" location="${target}/site/tests" />
 	<property name="version" location="1.1" />
 	<property name="jarfile" location="${target}/jsendnsca-core-1.1.jar" />
 	<property name="packages" location="packages" />
-	<property name="site" location="${target}/test-site" />
 
 	<path id="test-class-path">
 		<pathelement location="lib/junit-4.5.jar" />
@@ -29,6 +30,7 @@
 		<mkdir dir="${docs}" />
 		<mkdir dir="${packages}" />
 		<mkdir dir="${site}" />
+		<mkdir dir="${test-html}" />
 	</target>
 
 	<target name="compile" depends="-init" description="compile the source ">
@@ -58,28 +60,27 @@
 				</fileset>
 			</batchtest>
 		</junit>
-		<mkdir dir="" />
-		<junitreport todir="${site}">
+		<junitreport todir="${test-html}">
 			<fileset dir="${test-reports}">
 				<include name="TEST-*.xml" />
 			</fileset>
-			<report format="frames" todir="${site}" />
+			<report format="frames" todir="${test-html}" />
 		</junitreport>
 	</target>
 
-	<target name="packaging" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
+	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
 		<jar jarfile="${jarfile}" basedir="${classes}" />
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
 		<zip destfile="${packages}/jsendnsca-core-1.1.zip" update="false">
 			<zipfileset dir="${target}">
 				<include name="*.jar" />
-				<include name="docs/**/*" />
+				<include name="site/javadocs/**/*" />
 			</zipfileset>
 		</zip>
 		<tar destfile="${packages}/jsendnsca-core-1.1.tar.gz" compression="gzip">
 			<tarfileset dir="${target}">
 				<include name="*.jar" />
-				<include name="docs/**/*" />
+				<include name="site/javadocs/**/*" />
 			</tarfileset>
 		</tar>
 	</target>
