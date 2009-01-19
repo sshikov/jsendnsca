@@ -1,6 +1,10 @@
 package com.googlecode.jsendnsca.core;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import org.junit.Test;
 
@@ -94,5 +98,33 @@ public class MessagePayloadTest {
 		final MessagePayload messagePayload = new MessagePayload();
 
 		messagePayload.setLevel(4);
+	}
+	
+	@Test
+	public void shouldDetermineShortHostnameCorrectly() throws Exception {
+		if (isUnix()) {
+			final MessagePayload messagePayload = new MessagePayload();
+			messagePayload.useLocalHostname();
+			assertEquals(getShortHostNameFromOS(), messagePayload.getHostname());
+		}
+	}
+	
+	private static boolean isUnix() {
+		if(System.getProperty("os.name").toLowerCase().contains("windows")) {
+			return false;
+		}
+		return true;
+	}
+	
+	private static String getShortHostNameFromOS() throws Exception {
+		final Runtime runtime = Runtime.getRuntime();
+		final Process process = runtime.exec("hostname");
+		final BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+		
+		final String expectedHostName = input.readLine();
+		input.close();
+		assertEquals(0,process.waitFor());
+		
+		return expectedHostName;
 	}
 }
