@@ -2,74 +2,95 @@
 	<description>jsend-nsca core build</description>
 	<property name="version" value="1.1.1" />
 	<property name="source" location="src/main/java" />
-	<property name="test-source" location="src/test/java" />
+	<property name="test.source" location="src/test/java" />
 	<property name="target" location="target" />
 	<property name="jarfile" location="${target}/jsendnsca-core-${version}.jar" />
 	<property name="classes" location="${target}/classes" />
-	<property name="test-classes" location="${target}/test-classes" />
-	<property name="test-reports" location="${target}/test-reports" />
+	<property name="test.classes" location="${target}/test-classes" />
+	<property name="test.reports" location="${target}/test-reports" />
 	<property name="site" location="${target}/site" />
-	<property name="test-html" location="${site}/tests" />
+	<property name="test.html" location="${site}/tests" />
 	<property name="docs" location="${site}/javadocs" />
 	<property name="packages" location="packages" />
+	<property name="cobertura.report" location="${site}/coverage" />
+	<property name="cobertura.jars.dir" location="lib/cobertura" />
+	<property name="instrumented.classes" location="${target}/instrumented-classes" />
 
-	<path id="test-class-path" description="path to junit jar for running tests">
+	<path id="test.class.path" description="path to junit jar for running tests">
 		<pathelement location="lib/junit-4.5.jar" />
 	</path>
+
+	<path id="cobertura.class.path">
+		<fileset dir="lib/cobertura">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<taskdef classpathref="cobertura.class.path" resource="tasks.properties" />
 
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
 		<delete dir="${packages}" />
+		<delete file="${basedir}/cobertura.ser" />
 	</target>
 
 	<target name="-init">
 		<mkdir dir="${target}" />
 		<mkdir dir="${classes}" />
-		<mkdir dir="${test-classes}" />
-		<mkdir dir="${test-reports}" />
+		<mkdir dir="${test.classes}" />
+		<mkdir dir="${test.reports}" />
 		<mkdir dir="${docs}" />
 		<mkdir dir="${packages}" />
 		<mkdir dir="${site}" />
-		<mkdir dir="${test-html}" />
+		<mkdir dir="${test.html}" />
+		<mkdir dir="${cobertura.report}" />
 	</target>
 
 	<target name="compile" depends="-init" description="compile the source ">
-		<javac srcdir="${source}" destdir="${classes}" />
+		<javac srcdir="${source}" destdir="${classes}" debug="true" debuglevel="vars,lines,source" />
 	</target>
 
 	<target name="-test-compile" depends="compile" description="compile the test source ">
-		<javac srcdir="${test-source}" destdir="${test-classes}">
+		<javac srcdir="${test.source}" destdir="${test.classes}">
 			<classpath>
-				<path refid="test-class-path" />
+				<path refid="test.class.path" />
 				<pathelement location="${classes}" />
 			</classpath>
 		</javac>
 	</target>
 
 	<target name="test" depends="-test-compile" description="run tests">
-		<junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+		<cobertura-instrument todir="${instrumented.classes}">
+			<fileset dir="${classes}">
+				<include name="**/*.class" />
+			</fileset>
+		</cobertura-instrument>
+		<junit printsummary="true">
 			<classpath>
-				<path refid="test-class-path" />
+				<path refid="test.class.path" />
+				<path refid="cobertura.class.path" />
+				<pathelement location="${instrumented.classes}" />
 				<pathelement location="${classes}" />
-				<pathelement location="${test-classes}" />
+				<pathelement location="${test.classes}" />
 			</classpath>
-			<batchtest fork="yes" todir="${test-reports}">
+			<batchtest fork="yes" todir="${test.reports}">
 				<formatter type="xml" />
-				<fileset dir="${test-source}">
+				<fileset dir="${test.source}">
 					<include name="**/*Test*.java" />
 				</fileset>
 			</batchtest>
 		</junit>
-		<junitreport todir="${test-html}">
-			<fileset dir="${test-reports}">
+		<junitreport todir="${test.html}">
+			<fileset dir="${test.reports}">
 				<include name="TEST-*.xml" />
 			</fileset>
-			<report format="frames" todir="${test-html}" />
+			<report format="frames" todir="${test.html}" />
 		</junitreport>
+		<cobertura-report format="html" destdir="${cobertura.report}" srcdir="${source}" />
 	</target>
 
 	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
-		<buildnumber/>
+		<buildnumber />
 		<manifest file="${target}/MANIFEST.MF">
 			<attribute name="Version" value="${version}" />
 			<attribute name="Built-By" value="${user.name}" />
@@ -77,7 +98,7 @@
 			<attribute name="Build-OS" value="${os.name}" />
 			<attribute name="Build-OS-Version" value="${os.version}" />
 		</manifest>
-		<jar jarfile="${jarfile}" basedir="${classes}" manifest="${target}/MANIFEST.MF"/>
+		<jar jarfile="${jarfile}" basedir="${classes}" manifest="${target}/MANIFEST.MF" />
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
 		<zip destfile="${packages}/jsendnsca-core-${version}.zip">
 			<zipfileset dir="${docs}" prefix="javadocs" />
