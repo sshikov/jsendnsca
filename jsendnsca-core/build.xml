@@ -1,16 +1,16 @@
 <project name="jsendnsca-core" default="test" basedir=".">
 	<description>jsend-nsca core build</description>
+	<property name="version" value="1.1.1" />
 	<property name="source" location="src/main/java" />
 	<property name="test-source" location="src/test/java" />
 	<property name="target" location="target" />
+	<property name="jarfile" location="${target}/jsendnsca-core-${version}.jar" />
 	<property name="classes" location="${target}/classes" />
 	<property name="test-classes" location="${target}/test-classes" />
 	<property name="test-reports" location="${target}/test-reports" />
 	<property name="site" location="${target}/site" />
 	<property name="docs" location="${site}/javadocs" />
 	<property name="test-html" location="${target}/site/tests" />
-	<property name="version" location="1.1" />
-	<property name="jarfile" location="${target}/jsendnsca-core-1.1.jar" />
 	<property name="packages" location="packages" />
 
 	<path id="test-class-path">
@@ -71,17 +71,13 @@
 	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
 		<jar jarfile="${jarfile}" basedir="${classes}" />
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
-		<zip destfile="${packages}/jsendnsca-core-1.1.zip" update="false">
-			<zipfileset dir="${target}">
-				<include name="*.jar" />
-				<include name="site/javadocs/**/*" />
-			</zipfileset>
+		<zip destfile="${packages}/jsendnsca-core-${version}.zip">
+			<zipfileset dir="${docs}" prefix="javadocs" />
+			<zipfileset dir="${target}" includes="*.jar" />
 		</zip>
-		<tar destfile="${packages}/jsendnsca-core-1.1.tar.gz" compression="gzip">
-			<tarfileset dir="${target}">
-				<include name="*.jar" />
-				<include name="site/javadocs/**/*" />
-			</tarfileset>
+		<tar destfile="${packages}/jsendnsca-core-${version}.tar.gz" compression="gzip">
+			<tarfileset dir="${docs}" prefix="javadocs" />
+			<tarfileset dir="${target}" includes="*.jar" />
 		</tar>
 	</target>
 </project>
