@@ -9,11 +9,11 @@
 	<property name="test-classes" location="${target}/test-classes" />
 	<property name="test-reports" location="${target}/test-reports" />
 	<property name="site" location="${target}/site" />
+	<property name="test-html" location="${site}/tests" />
 	<property name="docs" location="${site}/javadocs" />
-	<property name="test-html" location="${target}/site/tests" />
 	<property name="packages" location="packages" />
 
-	<path id="test-class-path">
+	<path id="test-class-path" description="path to junit jar for running tests">
 		<pathelement location="lib/junit-4.5.jar" />
 	</path>
 
@@ -69,7 +69,15 @@
 	</target>
 
 	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
-		<jar jarfile="${jarfile}" basedir="${classes}" />
+		<buildnumber/>
+		<manifest file="${target}/MANIFEST.MF">
+			<attribute name="Version" value="${version}" />
+			<attribute name="Built-By" value="${user.name}" />
+			<attribute name="Build-Number" value="${build.number}" />
+			<attribute name="Build-OS" value="${os.name}" />
+			<attribute name="Build-OS-Version" value="${os.version}" />
+		</manifest>
+		<jar jarfile="${jarfile}" basedir="${classes}" manifest="${target}/MANIFEST.MF"/>
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
 		<zip destfile="${packages}/jsendnsca-core-${version}.zip">
 			<zipfileset dir="${docs}" prefix="javadocs" />
