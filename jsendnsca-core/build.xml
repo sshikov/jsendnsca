@@ -36,21 +36,15 @@
 
 	<target name="-init">
 		<mkdir dir="${target}" />
-		<mkdir dir="${classes}" />
-		<mkdir dir="${test.classes}" />
-		<mkdir dir="${test.reports}" />
-		<mkdir dir="${docs}" />
-		<mkdir dir="${packages}" />
-		<mkdir dir="${site}" />
-		<mkdir dir="${test.html}" />
-		<mkdir dir="${cobertura.report}" />
 	</target>
 
 	<target name="compile" depends="-init" description="compile the source ">
+		<mkdir dir="${classes}" />
 		<javac srcdir="${source}" destdir="${classes}" debug="true" debuglevel="vars,lines,source" />
 	</target>
 
 	<target name="-test-compile" depends="compile" description="compile the test source ">
+		<mkdir dir="${test.classes}" />
 		<javac srcdir="${test.source}" destdir="${test.classes}">
 			<classpath>
 				<path refid="test.class.path" />
@@ -59,12 +53,16 @@
 		</javac>
 	</target>
 
-	<target name="test" depends="-test-compile" description="run tests">
+	<target name="-instrument" depends="-test-compile">
 		<cobertura-instrument todir="${instrumented.classes}">
 			<fileset dir="${classes}">
 				<include name="**/*.class" />
 			</fileset>
 		</cobertura-instrument>
+	</target>
+
+	<target name="test" depends="-test-compile" description="run tests">
+		<mkdir dir="${test.reports}" />
 		<junit printsummary="true">
 			<classpath>
 				<path refid="test.class.path" />
@@ -80,6 +78,12 @@
 				</fileset>
 			</batchtest>
 		</junit>
+	</target>
+
+	<target name="site" depends="-instrument,test" description="generate coverage and unit test reports">
+		<mkdir dir="${site}" />
+		<mkdir dir="${test.html}" />
+		<mkdir dir="${cobertura.report}" />
 		<junitreport todir="${test.html}">
 			<fileset dir="${test.reports}">
 				<include name="TEST-*.xml" />
@@ -90,6 +94,8 @@
 	</target>
 
 	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
+		<mkdir dir="${docs}" />
+		<mkdir dir="${packages}" />
 		<buildnumber />
 		<manifest file="${target}/MANIFEST.MF">
 			<attribute name="Version" value="${version}" />
