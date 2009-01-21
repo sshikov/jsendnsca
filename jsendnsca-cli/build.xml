@@ -1,4 +1,4 @@
-<project name="jsendnsca-cli" default="packaging" basedir=".">
+<project name="jsendnsca-cli" default="package" basedir=".">
 	<description>jsend-nsca cli build</description>
 	<property name="source" location="src/main/java" />
 	<property name="scripts" location="src/main/bin" />
@@ -15,7 +15,7 @@
 
 	<target name="-build-core" description="build jsendnsca-core project as required by this project">
 		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" target="clean" />
-		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" target="packaging" />
+		<ant dir="../jsendnsca-core" inheritall="false" inheritrefs="false" target="package" />
 	</target>
 
 	<path id="class-path">
@@ -76,7 +76,7 @@
 		</junit>
 	</target>
 
-	<target name="packaging" depends="test" description="generate the distribution">
+	<target name="package" depends="test" description="generate the distribution">
 		<jar jarfile="${target}/jsendnsca-cli-1.1.jar" basedir="${classes}" />
 		<copy todir="${dist-lib}">
 			<fileset dir="${lib}">
