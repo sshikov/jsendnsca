@@ -31,7 +31,6 @@
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
 		<delete dir="${packages}" />
-		<delete file="${basedir}/cobertura.ser" />
 	</target>
 
 	<target name="-init">
@@ -54,7 +53,7 @@
 	</target>
 
 	<target name="-instrument" depends="-test-compile">
-		<cobertura-instrument todir="${instrumented.classes}">
+		<cobertura-instrument todir="${instrumented.classes}" datafile="${target}/cobertura.ser">
 			<fileset dir="${classes}">
 				<include name="**/*.class" />
 			</fileset>
