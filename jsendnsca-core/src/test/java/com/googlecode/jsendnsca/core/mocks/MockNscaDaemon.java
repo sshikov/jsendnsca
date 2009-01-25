@@ -27,11 +27,16 @@ public class MockNscaDaemon implements Runnable {
 	private int NSCA_PORT = 5667;
 	private ServerSocket serverSocket;
 	private boolean simulateTimeout = false;
+	private boolean failToSendInitVector = false;
 
 	public void setSimulateTimeout(boolean simulateTimeout) {
 		this.simulateTimeout = simulateTimeout;
 	}
 	
+	public void setFailToSendInitVector(boolean failToSendInitVector) {
+		this.failToSendInitVector = failToSendInitVector;
+	}
+
 	public MockNscaDaemon() throws IOException {
 		serverSocket = new ServerSocket(NSCA_PORT);
 	}
@@ -51,15 +56,16 @@ public class MockNscaDaemon implements Runnable {
 				}
 			}
 
-			// write init vector and timestamp
-			byte[] initVector = new byte[INITIALISATION_VECTOR_SIZE];
-			outputStream.write(initVector);
-			outputStream.writeInt((int) new Date().getTime());
-			outputStream.flush();
-
-			// read passive check bytes
-			byte[] passiveCheckBytes = new byte[PASSIVE_CHECK_SIZE];
-			inputStream.readFully(passiveCheckBytes, 0, PASSIVE_CHECK_SIZE);
+			if (!failToSendInitVector) {
+				// write init vector and timestamp
+				byte[] initVector = new byte[INITIALISATION_VECTOR_SIZE];
+				outputStream.write(initVector);
+				outputStream.writeInt((int) new Date().getTime());
+				outputStream.flush();
+				// read passive check bytes
+				byte[] passiveCheckBytes = new byte[PASSIVE_CHECK_SIZE];
+				inputStream.readFully(passiveCheckBytes, 0, PASSIVE_CHECK_SIZE);
+			}
 			
 			clientSocket.close();
 		} catch (IOException e) {

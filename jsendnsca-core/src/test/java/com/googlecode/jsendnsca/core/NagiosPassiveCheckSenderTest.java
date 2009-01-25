@@ -74,6 +74,26 @@ public class NagiosPassiveCheckSenderTest {
 		Thread.sleep(1000);
 		passiveAlerter.send(payload);
 	}
+	
+	@Test(expected=NagiosException.class)
+	public void shouldThrowNagiosExceptionIfNoInitVectorSentOnConnection() throws Exception {
+		final NagiosSettings nagiosSettings = new NagiosSettings();
+		nagiosSettings.setNagiosHost("localhost");
+		nagiosSettings.setPassword("hasturrocks");
+
+		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
+
+		final MessagePayload payload = new MessagePayload();
+		payload.setHostname("localhost");
+		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
+		payload.setServiceName("Test Service Name");
+		payload.setMessage("Test Message");
+
+		mockNscaDaemon.setFailToSendInitVector(true);
+		daemonThread = new Thread(mockNscaDaemon);
+		daemonThread.start();
+		passiveAlerter.send(payload);
+	}
 
 	@Test(expected = SocketTimeoutException.class)
 	public void shouldTimeoutWhenSendingPassiveCheck() throws Exception {
@@ -96,8 +116,9 @@ public class NagiosPassiveCheckSenderTest {
 	}
 	
 	@After
-	public void resetSetSimulateOnDaemon() {
+	public void resetMockAfterEachTest() {
 		mockNscaDaemon.setSimulateTimeout(false);
+		mockNscaDaemon.setFailToSendInitVector(false);
 	}
 
 	@AfterClass
