@@ -22,18 +22,22 @@ import java.util.Date;
 
 public class MockNscaDaemon implements Runnable {
 	private static final int PASSIVE_CHECK_SIZE = 720;
-	private static final int NSCA_PORT = 5667;
 	private static final int INITIALISATION_VECTOR_SIZE = 128;
-	
+
+	private int NSCA_PORT = 5667;
+	private ServerSocket serverSocket;
 	private boolean simulateTimeout = false;
 
 	public void setSimulateTimeout(boolean simulateTimeout) {
 		this.simulateTimeout = simulateTimeout;
 	}
+	
+	public MockNscaDaemon() throws IOException {
+		serverSocket = new ServerSocket(NSCA_PORT);
+	}
 
 	public void run() {
 		try {
-			ServerSocket serverSocket = new ServerSocket(NSCA_PORT);
 			Socket clientSocket = serverSocket.accept();
 
 			DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -41,7 +45,8 @@ public class MockNscaDaemon implements Runnable {
 			
 			if(simulateTimeout) {
 				try {
-					Thread.sleep(1500);
+					Thread.sleep(1100);
+					return;
 				} catch (InterruptedException ignore) {
 				}
 			}
@@ -57,9 +62,15 @@ public class MockNscaDaemon implements Runnable {
 			inputStream.readFully(passiveCheckBytes, 0, PASSIVE_CHECK_SIZE);
 			
 			clientSocket.close();
-			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void shutDown() {
+		try {
+			serverSocket.close();
+		} catch (IOException ignore) {
 		}
 	}
 }
