@@ -13,14 +13,26 @@
  */
 package com.googlecode.jsendnsca.core;
 
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.mocks.MockNscaDaemon;
 
 public class NagiosPassiveCheckSenderTest {
+
+	private static MockNscaDaemon mockNscaDaemon;
+	private static Thread daemonThread;
+
+	@BeforeClass
+	public static void startMockDaemon() throws IOException {
+		mockNscaDaemon = new MockNscaDaemon();
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowIllegalArgExceptionOnConstructingSenderWithNullNagiosSettings() throws Exception {
@@ -33,13 +45,13 @@ public class NagiosPassiveCheckSenderTest {
 
 		sender.send(null);
 	}
-	
-	@Test(expected=UnknownHostException.class)
+
+	@Test(expected = UnknownHostException.class)
 	public void shouldThrowUnknownHostExceptionOnUnknownHost() throws Exception {
 		NagiosSettings nagiosSettings = new NagiosSettings();
 		nagiosSettings.setNagiosHost("foobar");
 		final NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(nagiosSettings);
-		
+
 		sender.send(new MessagePayload());
 	}
 
@@ -48,7 +60,7 @@ public class NagiosPassiveCheckSenderTest {
 		final NagiosSettings nagiosSettings = new NagiosSettings();
 		nagiosSettings.setNagiosHost("localhost");
 		nagiosSettings.setPassword("hasturrocks");
-		
+
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
 		final MessagePayload payload = new MessagePayload();
@@ -57,13 +69,13 @@ public class NagiosPassiveCheckSenderTest {
 		payload.setServiceName("Test Service Name");
 		payload.setMessage("Test Message");
 
-		final Thread daemonThread = new Thread(new MockNscaDaemon());
+		daemonThread = new Thread(mockNscaDaemon);
 		daemonThread.start();
 		Thread.sleep(1000);
 		passiveAlerter.send(payload);
 	}
-	
-	@Test(expected=SocketTimeoutException.class)
+
+	@Test(expected = SocketTimeoutException.class)
 	public void shouldTimeoutWhenSendingPassiveCheck() throws Exception {
 		final NagiosSettings nagiosSettings = new NagiosSettings();
 		nagiosSettings.setTimeout(1000);
@@ -76,11 +88,33 @@ public class NagiosPassiveCheckSenderTest {
 		payload.setServiceName("Test Service Name");
 		payload.setMessage("Test Message");
 
-		final MockNscaDaemon mockNscaDaemon = new MockNscaDaemon();
 		mockNscaDaemon.setSimulateTimeout(true);
-		final Thread daemonThread = new Thread(mockNscaDaemon);
+		daemonThread = new Thread(mockNscaDaemon);
 		daemonThread.start();
 		Thread.sleep(1000);
 		passiveAlerter.send(payload);
 	}
+	
+	@After
+	public void resetSetSimulateOnDaemon() {
+		mockNscaDaemon.setSimulateTimeout(false);
+	}
+
+	@AfterClass
+	public static void stopDaemonThreadIfRunning() {
+		try {
+			if (daemonThread != null) {
+				System.out.println("Waiting for daemon thread to die");
+				while (daemonThread.isAlive()) { 
+					System.out.print(".");
+					Thread.sleep(10);
+				}
+			}
+			if (mockNscaDaemon != null) {
+				mockNscaDaemon.shutDown();
+			}
+		} catch (InterruptedException ignore) {
+		}
+	}
+
 }
