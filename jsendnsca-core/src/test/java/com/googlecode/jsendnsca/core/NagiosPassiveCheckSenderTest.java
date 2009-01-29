@@ -56,7 +56,7 @@ public class NagiosPassiveCheckSenderTest {
 	}
 
 	@Test
-	public void sendPassiveAlert() throws Exception {
+	public void shouldSendPassiveCheck() throws Exception {
 		final NagiosSettings nagiosSettings = new NagiosSettings();
 		nagiosSettings.setNagiosHost("localhost");
 		nagiosSettings.setPassword("hasturrocks");
@@ -125,9 +125,7 @@ public class NagiosPassiveCheckSenderTest {
 	public static void stopDaemonThreadIfRunning() {
 		try {
 			if (daemonThread != null) {
-				System.out.println("Waiting for daemon thread to die");
 				while (daemonThread.isAlive()) { 
-					System.out.print(".");
 					Thread.sleep(10);
 				}
 			}

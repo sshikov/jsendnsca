@@ -11,8 +11,8 @@
 	<property name="site" location="${target}/site" />
 	<property name="test.html" location="${site}/tests" />
 	<property name="docs" location="${site}/javadocs" />
-	<property name="packages" location="packages" />
 	<property name="cobertura.report" location="${site}/coverage" />
+	<property name="packages" location="packages" />
 	<property name="cobertura.jars.dir" location="lib/cobertura" />
 	<property name="instrumented.classes" location="${target}/instrumented-classes" />
 
@@ -38,12 +38,12 @@
 		<mkdir dir="${target}" />
 	</target>
 
-	<target name="compile" depends="-init" description="compile the source ">
+	<target name="-compile" depends="-init" description="compile the source ">
 		<mkdir dir="${classes}" />
 		<javac srcdir="${source}" destdir="${classes}" debug="true" debuglevel="vars,lines,source" />
 	</target>
 
-	<target name="-test-compile" depends="compile" description="compile the test source ">
+	<target name="-test-compile" depends="-compile" description="compile the test source ">
 		<mkdir dir="${test.classes}" />
 		<javac srcdir="${test.source}" destdir="${test.classes}">
 			<classpath>
