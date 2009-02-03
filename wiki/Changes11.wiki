@@ -1,5 +1,4 @@
 #summary Changes for 1.1
-#labels Featured
 
 = Changes for 1.1 =
 
