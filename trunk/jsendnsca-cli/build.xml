@@ -1,5 +1,6 @@
 <project name="jsendnsca-cli" default="package" basedir=".">
 	<description>jsend-nsca cli build</description>
+	<property name="version" value="1.1.1" />
 	<property name="source" location="src/main/java" />
 	<property name="scripts" location="src/main/bin" />
 	<property name="test-source" location="src/test/java" />
@@ -7,7 +8,7 @@
 	<property name="classes" location="${target}/classes" />
 	<property name="test-classes" location="${target}/test-classes" />
 	<property name="test-reports" location="${target}/test-reports" />
-	<property name="jarfile" location="${target}/jsendnsca-cli.jar" />
+	<property name="jarfile" value="${target}/jsendnsca-cli-${version}.jar" />
 	<property name="lib" location="lib" />
 	<property name="dist-lib" location="${target}/lib" />
 	<property name="dist-bin" location="${target}/bin" />
@@ -77,7 +78,7 @@
 	</target>
 
 	<target name="package" depends="test" description="generate the distribution">
-		<jar jarfile="${target}/jsendnsca-cli-1.1.jar" basedir="${classes}" />
+		<jar jarfile="${jarfile}" basedir="${classes}" />
 		<copy todir="${dist-lib}">
 			<fileset dir="${lib}">
 				<include name="*.jar" />
@@ -87,10 +88,12 @@
 				<include name="*.jar" />
 			</fileset>
 		</copy>
+		<tokens />
 		<copy todir="${dist-bin}">
 			<fileset dir="${scripts}" />
 		</copy>
-		<zip destfile="${packages}/jsendnsca-cli-1.1.zip" update="false">
+		<replace dir="${dist-bin}" token="@version@" value="${version}" />
+		<zip destfile="${packages}/jsendnsca-cli-${version}.zip" update="false">
 			<zipfileset dir="${target}" prefix="bin">
 				<include name="*.jar" />
 			</zipfileset>
@@ -99,7 +102,7 @@
 				<exclude name="junit-4.5.jar" />
 			</zipfileset>
 		</zip>
-		<tar destfile="${packages}/jsendnsca-cli-1.1.tar.gz" compression="gzip">
+		<tar destfile="${packages}/jsendnsca-cli-${version}.tar.gz" compression="gzip">
 			<tarfileset dir="${target}" prefix="bin" preserveLeadingSlashes="true">
 				<include name="*.jar" />
 			</tarfileset>
