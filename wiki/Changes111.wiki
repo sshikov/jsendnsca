@@ -1,0 +1,13 @@
+#summary Changes for 1.1.1
+
+= Changes for 1.1.1 =
+
+ * Removed dependencies on common-lang and common-io in Core API
+ * New EncryptionUtils class for handling encryption
+ * JUnit and Cobertura coverage reports being generated on Ant site target
+ * General refactoring in places
+ * Code coverage improved to 93%
+ 
+= Known Issues =
+
+ * Currently only supports no or XOR "encryption"
