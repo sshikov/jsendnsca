@@ -31,14 +31,14 @@
 	<target name="clean" description="clean up">
 		<delete dir="${target}" />
 		<delete dir="${packages}" />
-		<delete dir="${basedir}/cobertura.ser" />
+		<delete file="${basedir}/cobertura.ser" />
 	</target>
 
-	<target name="-init">
+	<target name="-initialize">
 		<mkdir dir="${target}" />
 	</target>
 
-	<target name="-compile" depends="-init" description="compile the source ">
+	<target name="-compile" depends="-initialize" description="compile the source ">
 		<mkdir dir="${classes}" />
 		<javac srcdir="${source}" destdir="${classes}" debug="true" debuglevel="vars,lines,source" />
 	</target>
