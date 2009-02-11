@@ -166,4 +166,55 @@ public class NagiosSettings {
 	public void setConnectTimeout(int connectTimeout) {
 		this.connectTimeout = connectTimeout;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + connectTimeout;
+		result = prime * result + encryptionMethod;
+		result = prime * result
+				+ ((nagiosHost == null) ? 0 : nagiosHost.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result + port;
+		result = prime * result + timeout;
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		NagiosSettings other = (NagiosSettings) obj;
+		if (connectTimeout != other.connectTimeout)
+			return false;
+		if (encryptionMethod != other.encryptionMethod)
+			return false;
+		if (nagiosHost == null) {
+			if (other.nagiosHost != null)
+				return false;
+		} else if (!nagiosHost.equals(other.nagiosHost))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (port != other.port)
+			return false;
+		if (timeout != other.timeout)
+			return false;
+		return true;
+	}
 }
