@@ -24,6 +24,7 @@ import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.mocks.MockNscaDaemon;
 
+@SuppressWarnings("static-access")
 public class NagiosPassiveCheckSenderTest {
 
 	private static MockNscaDaemon mockNscaDaemon;
@@ -57,9 +58,10 @@ public class NagiosPassiveCheckSenderTest {
 
 	@Test
 	public void shouldSendPassiveCheck() throws Exception {
-		final NagiosSettings nagiosSettings = new NagiosSettings();
-		nagiosSettings.setNagiosHost("localhost");
-		nagiosSettings.setPassword("hasturrocks");
+		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
+			.withNagiosHost("localhost")
+			.withPassword("hasturrocks")
+			.create();
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
