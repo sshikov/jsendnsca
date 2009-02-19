@@ -16,7 +16,7 @@
  * Ant used as build tool instead of maven
  * User and Developer guide created
  * MockNscaDaemon added for unit testing socket code
- * Encryption mode no longer hard coded to XOR, can now choose between No or XOR encryption
+ * Encryption mode no longer hard coded to XOR, can now choose between no or XOR encryption
  * Checking of illegal arguments where required
  
 = Known Issues =
