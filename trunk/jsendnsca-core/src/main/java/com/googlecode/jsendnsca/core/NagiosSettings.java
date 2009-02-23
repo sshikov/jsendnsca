@@ -28,7 +28,7 @@ public class NagiosSettings {
 	 * No encryption
 	 */
 	public static final int NO_ENCRYPTION = 0;
-	
+
 	/**
 	 * XOR encryption
 	 */
@@ -161,13 +161,16 @@ public class NagiosSettings {
 	/**
 	 * Set the connection timeout, default is 5000 ms
 	 * 
-	 * @param connectTimeout timeout in ms
+	 * @param connectTimeout
+	 *            timeout in ms
 	 */
 	public void setConnectTimeout(int connectTimeout) {
 		this.connectTimeout = connectTimeout;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -185,7 +188,9 @@ public class NagiosSettings {
 		return result;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override

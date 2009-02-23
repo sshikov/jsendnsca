@@ -1,7 +1,6 @@
 package com.googlecode.jsendnsca.core;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -80,17 +79,10 @@ public class MessagePayloadTest {
 
 		try {
 			messagePayload.setLevel("foobar");
-			fail("Should throw an IllegalArgumentException");
+			fail("Should throw IllegalArgumentException");
 		} catch (IllegalArgumentException e) {
 			assertEquals("[foobar] is not valid level", e.getMessage());
 		}
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void shouldThrowIllegalArgumentExceptionIfStringLevelIsNull() throws Exception {
-		final MessagePayload messagePayload = new MessagePayload();
-
-		messagePayload.setLevel(null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -98,6 +90,14 @@ public class MessagePayloadTest {
 		final MessagePayload messagePayload = new MessagePayload();
 
 		messagePayload.setLevel(4);
+	}
+	
+	@Test
+	public void shouldSetLevelUsingEnum() throws Exception {
+		final MessagePayload payload = new MessagePayload();
+		payload.setLevel(Level.WARNING);
+		
+		assertEquals(1, payload.getLevel());
 	}
 	
 	@Test
