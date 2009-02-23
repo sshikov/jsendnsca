@@ -170,6 +170,15 @@ public class MessagePayload {
 	}
 
 	/**
+	 * Set the level of the Passive check
+	 * 
+	 * @param levelValue the level
+	 */
+	public void setLevel(Level levelValue) {
+		this.level = levelValue.ordinal();
+	}
+
+	/**
 	 * The service name of this passive check
 	 * 
 	 * @return the service name, default is "UNDEFINED"
@@ -210,4 +219,5 @@ public class MessagePayload {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+
 }
