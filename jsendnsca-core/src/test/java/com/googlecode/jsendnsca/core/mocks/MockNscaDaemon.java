@@ -19,12 +19,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 
+import com.googlecode.jsendnsca.core.utils.IOUtils;
+
 public class MockNscaDaemon implements Runnable {
 	private static final int PASSIVE_CHECK_SIZE = 720;
 	private static final int INITIALISATION_VECTOR_SIZE = 128;
 
 	private int NSCA_PORT = 5667;
-	private ServerSocket serverSocket;
 	private boolean simulateTimeout = false;
 	private boolean failToSendInitVector = false;
 
@@ -37,10 +38,14 @@ public class MockNscaDaemon implements Runnable {
 	}
 
 	public void run() {
+		ServerSocket serverSocket = null;
+		Socket clientSocket = null;
 		try {
 			serverSocket = new ServerSocket(NSCA_PORT);
-			Thread.sleep(500);
-			Socket clientSocket = serverSocket.accept();
+			while(!serverSocket.isBound()) {
+				Thread.sleep(10);
+			}
+			clientSocket = serverSocket.accept();
 
 			DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
 			DataInputStream inputStream = new DataInputStream(clientSocket.getInputStream());
@@ -50,6 +55,7 @@ public class MockNscaDaemon implements Runnable {
 					Thread.sleep(1100);
 					return;
 				} catch (InterruptedException ignore) {
+					return;
 				}
 			}
 
@@ -64,10 +70,11 @@ public class MockNscaDaemon implements Runnable {
 				inputStream.readFully(passiveCheckBytes, 0, PASSIVE_CHECK_SIZE);
 			}
 			
-			clientSocket.close();
-			serverSocket.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			IOUtils.closeQuietly(clientSocket);
+			IOUtils.closeQuietly(serverSocket);
 		}
 	}
 }

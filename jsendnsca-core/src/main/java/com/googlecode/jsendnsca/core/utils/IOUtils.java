@@ -19,6 +19,7 @@ package com.googlecode.jsendnsca.core.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -82,6 +83,15 @@ public class IOUtils {
 		try {
 			if (socket != null) {
 				socket.close();
+			}
+		} catch (IOException ignore) {
+		}
+	}
+
+	public static void closeQuietly(ServerSocket serverSocket) {
+		try {
+			if (serverSocket != null) {
+				serverSocket.close();
 			}
 		} catch (IOException ignore) {
 		}
