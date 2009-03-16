@@ -18,10 +18,10 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 import com.googlecode.jsendnsca.core.mocks.MockNscaDaemon;
 
 @SuppressWarnings("static-access")
@@ -30,9 +30,23 @@ public class NagiosPassiveCheckSenderTest {
 	private static MockNscaDaemon mockNscaDaemon;
 	private static Thread daemonThread;
 
-	@BeforeClass
-	public static void startMockDaemon() throws IOException {
+	@Before
+	public void startMockDaemon() throws IOException {
 		mockNscaDaemon = new MockNscaDaemon();
+	}
+	
+	@After
+	public void stopMockDaemon() {
+		mockNscaDaemon.setSimulateTimeout(false);
+		mockNscaDaemon.setFailToSendInitVector(false);
+		try {
+			if (daemonThread != null) {
+				while (daemonThread.isAlive()) { 
+					Thread.sleep(10);
+				}
+			}
+		} catch (InterruptedException ignore) { 
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -73,7 +87,6 @@ public class NagiosPassiveCheckSenderTest {
 
 		daemonThread = new Thread(mockNscaDaemon);
 		daemonThread.start();
-		Thread.sleep(1000);
 		passiveAlerter.send(payload);
 	}
 	
@@ -113,29 +126,6 @@ public class NagiosPassiveCheckSenderTest {
 		mockNscaDaemon.setSimulateTimeout(true);
 		daemonThread = new Thread(mockNscaDaemon);
 		daemonThread.start();
-		Thread.sleep(1000);
 		passiveAlerter.send(payload);
 	}
-	
-	@After
-	public void resetMockAfterEachTest() {
-		mockNscaDaemon.setSimulateTimeout(false);
-		mockNscaDaemon.setFailToSendInitVector(false);
-	}
-
-	@AfterClass
-	public static void stopDaemonThreadIfRunning() {
-		try {
-			if (daemonThread != null) {
-				while (daemonThread.isAlive()) { 
-					Thread.sleep(10);
-				}
-			}
-			if (mockNscaDaemon != null) {
-				mockNscaDaemon.shutDown();
-			}
-		} catch (InterruptedException ignore) {
-		}
-	}
-
 }

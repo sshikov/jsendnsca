@@ -15,7 +15,6 @@ package com.googlecode.jsendnsca.core.mocks;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
@@ -37,12 +36,10 @@ public class MockNscaDaemon implements Runnable {
 		this.failToSendInitVector = failToSendInitVector;
 	}
 
-	public MockNscaDaemon() throws IOException {
-		serverSocket = new ServerSocket(NSCA_PORT);
-	}
-
 	public void run() {
 		try {
+			serverSocket = new ServerSocket(NSCA_PORT);
+			Thread.sleep(500);
 			Socket clientSocket = serverSocket.accept();
 
 			DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
@@ -68,15 +65,9 @@ public class MockNscaDaemon implements Runnable {
 			}
 			
 			clientSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void shutDown() {
-		try {
 			serverSocket.close();
-		} catch (IOException ignore) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 }
