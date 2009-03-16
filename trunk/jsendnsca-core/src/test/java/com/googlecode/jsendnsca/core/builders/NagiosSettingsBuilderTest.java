@@ -1,8 +1,11 @@
-package com.googlecode.jsendnsca.core;
+package com.googlecode.jsendnsca.core.builders;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import com.googlecode.jsendnsca.core.NagiosSettings;
+import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 
 @SuppressWarnings("static-access")
 public class NagiosSettingsBuilderTest {

@@ -11,7 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.googlecode.jsendnsca.core;
+package com.googlecode.jsendnsca.core.builders;
+
+import com.googlecode.jsendnsca.core.NagiosSettings;
 
 /**
  * Used to construct a {@link NagiosSettings} instance using a builder pattern
