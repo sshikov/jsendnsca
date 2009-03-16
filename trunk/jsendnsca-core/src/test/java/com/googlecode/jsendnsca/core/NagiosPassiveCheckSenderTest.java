@@ -21,6 +21,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
 import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 import com.googlecode.jsendnsca.core.mocks.MockNscaDaemon;
 
@@ -42,7 +43,7 @@ public class NagiosPassiveCheckSenderTest {
 		try {
 			if (daemonThread != null) {
 				while (daemonThread.isAlive()) { 
-					Thread.sleep(10);
+					Thread.sleep(100);
 				}
 			}
 		} catch (InterruptedException ignore) { 
@@ -79,11 +80,12 @@ public class NagiosPassiveCheckSenderTest {
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
-		final MessagePayload payload = new MessagePayload();
-		payload.setHostname("localhost");
-		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
-		payload.setServiceName("Test Service Name");
-		payload.setMessage("Test Message");
+		final MessagePayload payload = MessagePayloadBuilder
+			.withHostname("localhost")
+			.withLevel(Level.CRITICAL)
+			.withServiceName("Test Service Name")
+			.withMessage("Test Message")
+			.create();
 
 		daemonThread = new Thread(mockNscaDaemon);
 		daemonThread.start();
