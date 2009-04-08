@@ -92,6 +92,28 @@ public class NagiosPassiveCheckSenderTest {
 		passiveAlerter.send(payload);
 	}
 	
+	@Test
+	public void shouldSendPassiveCheckTripleDes() throws Exception {
+		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
+			.withNagiosHost("localhost")
+			.withPassword("hasturrocks")
+			.create();
+		nagiosSettings.setEncryptionMethod( NagiosSettings.TRIPLE_DES_ENCRYPTION );
+
+		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
+
+		final MessagePayload payload = MessagePayloadBuilder
+			.withHostname("localhost")
+			.withLevel(Level.CRITICAL)
+			.withServiceName("Test Service Name")
+			.withMessage("Test Message")
+			.create();
+
+		daemonThread = new Thread(mockNscaDaemon);
+		daemonThread.start();
+		passiveAlerter.send(payload);
+	}
+	
 	@Test(expected=NagiosException.class)
 	public void shouldThrowNagiosExceptionIfNoInitVectorSentOnConnection() throws Exception {
 		final NagiosSettings nagiosSettings = new NagiosSettings();

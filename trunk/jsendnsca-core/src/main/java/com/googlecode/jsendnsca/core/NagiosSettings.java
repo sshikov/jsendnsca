@@ -34,6 +34,11 @@ public class NagiosSettings {
 	 */
 	public static final int XOR_ENCRYPTION = 1;
 
+	/**
+	 * Triple-DES encryption
+	 */
+	public static final int TRIPLE_DES_ENCRYPTION = 3;
+
 	private String nagiosHost = "localhost";
 	private int port = 5667;
 	private String password = "hasturrocks";
@@ -136,7 +141,7 @@ public class NagiosSettings {
 
 	/**
 	 * The encryption method used by the NSCA Daemon, currently only
-	 * NO_ENCRYPTION or XOR_ENCRYPTION
+	 * NO_ENCRYPTION, XOR_ENCRYPTION or TRIPLE_DES_ENCRYPTION
 	 * 
 	 * @param encryptionMethod
 	 *            the method
@@ -144,7 +149,7 @@ public class NagiosSettings {
 	public void setEncryptionMethod(int encryptionMethod) {
 		if (!EncryptionUtils.isEncryptionMethodSupported(encryptionMethod)) {
 			throw new UnsupportedOperationException(
-					"Currently only NO_ENCRYPTION or XOR_ENCRYPTION Supported");
+					"Currently only NO_ENCRYPTION, XOR_ENCRYPTION or TRIPLE_DES_ENCRYPTION Supported");
 		}
 		this.encryptionMethod = encryptionMethod;
 	}
