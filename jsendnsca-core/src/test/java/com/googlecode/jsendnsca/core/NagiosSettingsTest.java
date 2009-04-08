@@ -28,10 +28,11 @@ public class NagiosSettingsTest {
     }
     
     @Test
-    public void shouldSupportXORorNoEncryption() {
+    public void supportedEncryptions() {
     	final NagiosSettings nagiosSettings = new NagiosSettings();
     	
     	nagiosSettings.setEncryptionMethod(NagiosSettings.NO_ENCRYPTION);
     	nagiosSettings.setEncryptionMethod(NagiosSettings.XOR_ENCRYPTION);
+    	nagiosSettings.setEncryptionMethod(NagiosSettings.TRIPLE_DES_ENCRYPTION);
     }
 }
