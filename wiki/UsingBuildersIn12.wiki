@@ -1,0 +1,50 @@
+#summary Using the new builders in 1.2 release
+
+= Introduction =
+
+The example below shows using the new builders in 1.2. IMHO, I think it looks a lot
+cleaner than using the actual classes
+
+{{{
+import java.io.IOException;
+
+import com.googlecode.jsendnsca.core.Level;
+import com.googlecode.jsendnsca.core.MessagePayload;
+import com.googlecode.jsendnsca.core.NagiosException;
+import com.googlecode.jsendnsca.core.NagiosPassiveCheckSender;
+import com.googlecode.jsendnsca.core.NagiosSettings;
+import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
+import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
+
+public class Snippet {
+	
+	@SuppressWarnings("static-access")
+	public static void main(String[] args) {
+		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
+				.withNagiosHost("localhost")
+				.withPort(5667)
+				.withConnectionTimeout(5000)
+				.withResponseTimeout(15000)
+				.withPassword("hasturrocks")
+				.create();
+	
+		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(
+				nagiosSettings);
+	
+		final MessagePayload payload = MessagePayloadBuilder
+			.withHostname("localhost")
+			.withLevel(Level.CRITICAL)
+			.withServiceName("Test Service Name")
+			.withMessage("Test Message")
+			.create();
+	
+		try {
+			passiveAlerter.send(payload);
+		} catch (NagiosException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+}}}
