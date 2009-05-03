@@ -220,4 +220,51 @@ public class MessagePayload {
 		this.message = message;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((hostname == null) ? 0 : hostname.hashCode());
+		result = prime * result + level;
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
+		result = prime * result
+				+ ((serviceName == null) ? 0 : serviceName.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MessagePayload other = (MessagePayload) obj;
+		if (hostname == null) {
+			if (other.hostname != null)
+				return false;
+		} else if (!hostname.equals(other.hostname))
+			return false;
+		if (level != other.level)
+			return false;
+		if (message == null) {
+			if (other.message != null)
+				return false;
+		} else if (!message.equals(other.message))
+			return false;
+		if (serviceName == null) {
+			if (other.serviceName != null)
+				return false;
+		} else if (!serviceName.equals(other.serviceName))
+			return false;
+		return true;
+	}
 }
