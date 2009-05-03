@@ -13,41 +13,48 @@
  */
 package com.googlecode.jsendnsca.core;
 
-import java.io.IOException;
+import static org.hamcrest.Matchers.hasItem;
+import static org.junit.Assert.assertThat;
+
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
 import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
-import com.googlecode.jsendnsca.core.mocks.MockNscaDaemon;
+import com.googlecode.jsendnsca.core.mocks.NagiosNscaStub;
 
 @SuppressWarnings("static-access")
 public class NagiosPassiveCheckSenderTest {
 
-	private static MockNscaDaemon mockNscaDaemon;
-	private static Thread daemonThread;
+	private static final String HOSTNAME = "localhost";
+	private static final String MESSAGE = "Test Message";
+	private static final String SERVICE_NAME = "Test Service Name";
+	private static final String PASSWORD = "hasturrocks";
+	
+	private static NagiosNscaStub stub;
 
-	@Before
-	public void startMockDaemon() throws IOException {
-		mockNscaDaemon = new MockNscaDaemon();
+	@BeforeClass
+	public static void startMockDaemon() throws Exception {
+		stub = new NagiosNscaStub(5667, PASSWORD);
+		stub.start();
 	}
 	
 	@After
-	public void stopMockDaemon() {
-		mockNscaDaemon.setSimulateTimeout(false);
-		mockNscaDaemon.setFailToSendInitVector(false);
-		try {
-			if (daemonThread != null) {
-				while (daemonThread.isAlive()) { 
-					Thread.sleep(100);
-				}
-			}
-		} catch (InterruptedException ignore) { 
-		}
+	public void reset() {
+		stub.setSendInitialisationVector(true);
+		stub.setSimulateTimeoutInMs(0);
+		stub.clearMessagePayloadList();
+	}
+	
+	@AfterClass
+	public static void stopMockDaemon() throws Exception {
+		stub.stop();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -74,63 +81,62 @@ public class NagiosPassiveCheckSenderTest {
 	@Test
 	public void shouldSendPassiveCheck() throws Exception {
 		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
-			.withNagiosHost("localhost")
-			.withPassword("hasturrocks")
+			.withNagiosHost(HOSTNAME)
+			.withPassword(PASSWORD)
 			.create();
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
 		final MessagePayload payload = MessagePayloadBuilder
-			.withHostname("localhost")
+			.withHostname(HOSTNAME)
 			.withLevel(Level.CRITICAL)
-			.withServiceName("Test Service Name")
-			.withMessage("Test Message")
+			.withServiceName(SERVICE_NAME)
+			.withMessage(MESSAGE)
 			.create();
 
-		daemonThread = new Thread(mockNscaDaemon);
-		daemonThread.start();
 		passiveAlerter.send(payload);
+		
+		Thread.sleep(50); // wait before checking to ensure passive check is received by stub
+		
+		List<MessagePayload> passiveChecksList = stub.getMessagePayloadList();
+		assertThat(passiveChecksList, hasItem(payload));
 	}
 	
 	@Test
 	public void shouldSendPassiveCheckTripleDes() throws Exception {
 		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
-			.withNagiosHost("localhost")
-			.withPassword("hasturrocks")
+			.withNagiosHost(HOSTNAME)
+			.withPassword(PASSWORD)
 			.create();
 		nagiosSettings.setEncryptionMethod( NagiosSettings.TRIPLE_DES_ENCRYPTION );
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
 		final MessagePayload payload = MessagePayloadBuilder
-			.withHostname("localhost")
+			.withHostname(HOSTNAME)
 			.withLevel(Level.CRITICAL)
-			.withServiceName("Test Service Name")
-			.withMessage("Test Message")
+			.withServiceName(SERVICE_NAME)
+			.withMessage(MESSAGE)
 			.create();
 
-		daemonThread = new Thread(mockNscaDaemon);
-		daemonThread.start();
 		passiveAlerter.send(payload);
 	}
 	
 	@Test(expected=NagiosException.class)
 	public void shouldThrowNagiosExceptionIfNoInitVectorSentOnConnection() throws Exception {
 		final NagiosSettings nagiosSettings = new NagiosSettings();
-		nagiosSettings.setNagiosHost("localhost");
-		nagiosSettings.setPassword("hasturrocks");
+		nagiosSettings.setNagiosHost(HOSTNAME);
+		nagiosSettings.setPassword(PASSWORD);
+		stub.setSendInitialisationVector(false);
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
 		final MessagePayload payload = new MessagePayload();
-		payload.setHostname("localhost");
+		payload.setHostname(HOSTNAME);
 		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
-		payload.setServiceName("Test Service Name");
-		payload.setMessage("Test Message");
+		payload.setServiceName(SERVICE_NAME);
+		payload.setMessage(MESSAGE);
 
-		mockNscaDaemon.setFailToSendInitVector(true);
-		daemonThread = new Thread(mockNscaDaemon);
-		daemonThread.start();
 		passiveAlerter.send(payload);
 	}
 
@@ -138,18 +144,16 @@ public class NagiosPassiveCheckSenderTest {
 	public void shouldTimeoutWhenSendingPassiveCheck() throws Exception {
 		final NagiosSettings nagiosSettings = new NagiosSettings();
 		nagiosSettings.setTimeout(1000);
+		stub.setSimulateTimeoutInMs(1500);
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
 		final MessagePayload payload = new MessagePayload();
-		payload.setHostname("localhost");
+		payload.setHostname(HOSTNAME);
 		payload.setLevel(MessagePayload.LEVEL_CRITICAL);
-		payload.setServiceName("Test Service Name");
-		payload.setMessage("Test Message");
+		payload.setServiceName(SERVICE_NAME);
+		payload.setMessage(MESSAGE);
 
-		mockNscaDaemon.setSimulateTimeout(true);
-		daemonThread = new Thread(mockNscaDaemon);
-		daemonThread.start();
 		passiveAlerter.send(payload);
 	}
 }

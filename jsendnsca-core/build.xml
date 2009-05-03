@@ -18,6 +18,7 @@
 
 	<path id="test.class.path" description="path to junit jar for running tests">
 		<pathelement location="lib/junit-4.5.jar" />
+		<pathelement location="lib/hamcrest-all-1.1.jar" />
 	</path>
 
 	<path id="cobertura.class.path">
@@ -63,7 +64,7 @@
 
 	<target name="test" depends="-test-compile" description="run tests">
 		<mkdir dir="${test.reports}" />
-		<junit printsummary="true">
+		<junit printsummary="true" haltonfailure="yes">
 			<classpath>
 				<path refid="test.class.path" />
 				<path refid="cobertura.class.path" />
