@@ -17,11 +17,32 @@ import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * This sender does not block unlike the {@link NagiosPassiveCheckSender}. Instead
+ * it internally queues the passive check in an unbounded queue and has a single worker
+ * thread sending from the queue.<p>
+ * 
+ * Any exceptions resulting from sending the passive check are output to standard error with 
+ * a stack trace.<p>
+ * 
+ * This sender is useful where you don't want to wait for the passive check to be sent and
+ * don't care if the sending fails<p>
+ * 
+ * @author Raj Patel
+ * @since 1.2
+ */
 public class NonBlockingNagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 
 	private final INagiosPassiveCheckSender sender;
 	private final ExecutorService executor;
 
+	/**
+	 * Construct a new {@link NonBlockingNagiosPassiveCheckSender} with the provided
+	 * {@link NagiosSettings}
+	 * 
+	 * @param nagiosSettings
+	 *            the {@link NagiosSettings} to use to send the Passive Check
+	 */
 	public NonBlockingNagiosPassiveCheckSender(NagiosSettings settings) {
 		this(new NagiosPassiveCheckSender(settings));
 	}
@@ -31,6 +52,13 @@ public class NonBlockingNagiosPassiveCheckSender implements INagiosPassiveCheckS
 		this.executor = Executors.newSingleThreadExecutor();
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.googlecode.jsendnsca.sender.INagiosPassiveCheckSender#send(com.googlecode
+	 * .jsendnsca.sender.MessagePayload)
+	 */
 	public void send(MessagePayload payload) throws NagiosException, IOException {
 		executor.execute(new NonBlockingSender(payload));
 	}
