@@ -34,7 +34,7 @@ public class NonBlockingNagiosPassiveCheckSenderTest {
 		assertThat(duration, lessThan(100L));
 	}
 	
-	private class SlowNagiosPassiveCheckSender implements INagiosPassiveCheckSender {
+	private static class SlowNagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 
 		public void send(MessagePayload payload) throws NagiosException, IOException {
 			try {
