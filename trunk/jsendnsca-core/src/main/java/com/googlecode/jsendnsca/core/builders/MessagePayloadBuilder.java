@@ -8,14 +8,14 @@ import com.googlecode.jsendnsca.core.MessagePayload;
 /**
  * Used to construct a {@link MessagePayload} using a builder pattern e.g.
  * 
- * <code>
+ * <pre>
  * MessagePayload payload = MessagePayloadBuilder
  *			.withHostname("localhost")
  *			.withLevel(Level.CRITICAL)
  *			.withServiceName("Test Service Name")
  *			.withMessage("Test Message")
  *			.create();
- * </code>
+ * </pre>
  * 
  * @author Raj.Patel
  * @since 1.2

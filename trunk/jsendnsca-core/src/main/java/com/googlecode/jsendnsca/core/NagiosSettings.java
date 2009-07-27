@@ -13,6 +13,7 @@
  */
 package com.googlecode.jsendnsca.core;
 
+import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 import com.googlecode.jsendnsca.core.utils.EncryptionUtils;
 import com.googlecode.jsendnsca.core.utils.StringUtils;
 
@@ -21,6 +22,7 @@ import com.googlecode.jsendnsca.core.utils.StringUtils;
  * 
  * @author Raj.Patel
  * @version 1.0
+ * @see NagiosSettingsBuilder
  */
 public class NagiosSettings {
 
