@@ -117,6 +117,14 @@ public class NagiosSettingsBuilder {
         return instance;
     }
 
+    /**
+     * The next {@link NagiosSettings} created will use the specified encryption
+     * method
+     * 
+     * @param encryptionMethod
+     *            the encryption method to use when sending the passive check
+     * @return the {@link NagiosSettingsBuilder} instance
+     */
     public NagiosSettingsBuilder withEncryption(int encryptionMethod) {
         instance.nagiosSettings.setEncryptionMethod(encryptionMethod);
         return instance;
