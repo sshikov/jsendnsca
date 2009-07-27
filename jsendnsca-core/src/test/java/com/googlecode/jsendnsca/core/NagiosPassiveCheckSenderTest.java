@@ -13,16 +13,16 @@
  */
 package com.googlecode.jsendnsca.core;
 
-import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import static org.junit.Assert.*;
 
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
@@ -39,21 +39,14 @@ public class NagiosPassiveCheckSenderTest {
 	
 	private static NagiosNscaStub stub;
 
-	@BeforeClass
-	public static void startMockDaemon() throws Exception {
+	@Before
+	public void startMockDaemon() throws Exception {
 		stub = new NagiosNscaStub(5667, PASSWORD);
 		stub.start();
 	}
 	
 	@After
-	public void reset() {
-		stub.setSendInitialisationVector(true);
-		stub.setSimulateTimeoutInMs(0);
-		stub.clearMessagePayloadList();
-	}
-	
-	@AfterClass
-	public static void stopMockDaemon() throws Exception {
+	public void stopMockDaemon() throws Exception {
 		stub.stop();
 	}
 
@@ -107,8 +100,8 @@ public class NagiosPassiveCheckSenderTest {
 		final NagiosSettings nagiosSettings = NagiosSettingsBuilder
 			.withNagiosHost(HOSTNAME)
 			.withPassword(PASSWORD)
+			.withEncryption(NagiosSettings.TRIPLE_DES_ENCRYPTION)
 			.create();
-		nagiosSettings.setEncryptionMethod( NagiosSettings.TRIPLE_DES_ENCRYPTION );
 
 		final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
