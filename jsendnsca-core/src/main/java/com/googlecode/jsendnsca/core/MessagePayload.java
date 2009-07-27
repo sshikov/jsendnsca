@@ -17,6 +17,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
 
+import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
 import com.googlecode.jsendnsca.core.utils.LevelUtils;
 import com.googlecode.jsendnsca.core.utils.StringUtils;
 
@@ -25,6 +26,7 @@ import com.googlecode.jsendnsca.core.utils.StringUtils;
  * 
  * @author Raj.Patel
  * @version 1.0
+ * @see MessagePayloadBuilder
  */
 public class MessagePayload {
 
@@ -267,4 +269,6 @@ public class MessagePayload {
 			return false;
 		return true;
 	}
+
+    
 }

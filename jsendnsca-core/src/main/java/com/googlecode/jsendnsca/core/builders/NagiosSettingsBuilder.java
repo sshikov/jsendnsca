@@ -16,8 +16,15 @@ package com.googlecode.jsendnsca.core.builders;
 import com.googlecode.jsendnsca.core.NagiosSettings;
 
 /**
- * Used to construct a {@link NagiosSettings} instance using a builder pattern
+ * Used to construct a {@link NagiosSettings} instance using a builder pattern e.g.
  * 
+ * <pre>
+ * 
+ * final NagiosSettings nagiosSettings = NagiosSettingsBuilder
+ *      .withNagiosHost(HOSTNAME)
+ *      .withPassword(PASSWORD)
+ *      .create();
+ * </pre>
  * @author Raj.Patel
  * @since 1.2
  */
