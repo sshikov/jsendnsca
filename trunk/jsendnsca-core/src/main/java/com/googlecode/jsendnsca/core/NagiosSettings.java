@@ -155,6 +155,17 @@ public class NagiosSettings {
 		}
 		this.encryptionMethod = encryptionMethod;
 	}
+	
+    /**
+     * The encryption method used by the NSCA Daemon, currently only
+     * NO_ENCRYPTION, XOR_ENCRYPTION or TRIPLE_DES_ENCRYPTION
+     * 
+     * @param encryption
+     *            the {@link Encryption} method
+     */
+    public void setEncryptionMethod(Encryption encryption) {
+        this.encryptionMethod = encryption.getCode();
+    }
 
 	/**
 	 * The connection timeout
