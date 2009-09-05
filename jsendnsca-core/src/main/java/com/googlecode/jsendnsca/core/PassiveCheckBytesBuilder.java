@@ -16,7 +16,6 @@ package com.googlecode.jsendnsca.core;
 import java.util.zip.CRC32;
 
 import com.googlecode.jsendnsca.core.utils.ByteArrayUtils;
-import com.googlecode.jsendnsca.core.utils.EncryptionUtils;
 
 class PassiveCheckBytesBuilder {
 
@@ -83,7 +82,9 @@ class PassiveCheckBytesBuilder {
     }
 
     public PassiveCheckBytesBuilder encrypt(byte[] initVector, NagiosSettings nagiosSettings) {
-        EncryptionUtils.encrypt(bytes, initVector, nagiosSettings);
+        Encryption
+            .getEncryptor(nagiosSettings.getEncryptionMethod())
+            .encrypt(bytes, initVector, nagiosSettings.getPassword());
         return this;
     }
 
