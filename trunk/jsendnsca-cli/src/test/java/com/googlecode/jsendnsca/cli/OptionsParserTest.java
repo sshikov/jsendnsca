@@ -32,7 +32,7 @@ public class OptionsParserTest {
 
         assertEquals("localhost", nagiosSettings.getNagiosHost());
         assertEquals(5667, nagiosSettings.getPort());
-        assertEquals("hasturrocks", nagiosSettings.getPassword());
+        assertEquals("password", nagiosSettings.getPassword());
         assertEquals(10000, nagiosSettings.getTimeout());
     }
 
