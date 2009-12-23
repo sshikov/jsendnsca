@@ -26,7 +26,7 @@ public class Snippet {
                 .withPort(5667)
                 .withConnectionTimeout(5000)
                 .withResponseTimeout(15000)
-                .withPassword("hasturrocks")
+                .withPassword("password")
                 .create();
     
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(
