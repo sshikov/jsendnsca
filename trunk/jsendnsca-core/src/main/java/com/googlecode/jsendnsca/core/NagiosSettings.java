@@ -43,7 +43,7 @@ public class NagiosSettings {
 
 	private String nagiosHost = "localhost";
 	private int port = 5667;
-	private String password = "hasturrocks";
+	private String password = "password";
 	private int timeout = 10000;
 	private int connectTimeout = 5000;
 	private int encryptionMethod = XOR_ENCRYPTION;
@@ -93,7 +93,7 @@ public class NagiosSettings {
 	/**
 	 * The password configured in the ncsa.cfg file used by NSCA
 	 * 
-	 * @return the password, defaults to "hasturrocks"
+	 * @return the password, defaults to "password"
 	 */
 	public String getPassword() {
 		return password;
@@ -103,7 +103,7 @@ public class NagiosSettings {
 	 * The password configured in the ncsa.cfg file used by NSCA
 	 * 
 	 * @param password
-	 *            the password, defaults to "hasturrocks"
+	 *            the password, defaults to "password"
 	 */
 	public void setPassword(String password) {
 		if (StringUtils.isBlank(password)) {
