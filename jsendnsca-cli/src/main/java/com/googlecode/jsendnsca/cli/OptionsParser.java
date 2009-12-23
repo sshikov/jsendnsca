@@ -78,7 +78,7 @@ public class OptionsParser {
         options.addOption(getOption(NAGIOSHOST_OPTION, "nagios host", "the host where nagios is running, defaults to localhost"));
         options.addOption(getOption(ALERTINGHOST_OPTION, "alerting host", "the host sending the passive check, defaults to using the hostname of the machine"));
         options.addOption(getOption(PORT_OPTION, PORT_OPTION, "the port on which NSCA is running, defaults to 5667"));
-        options.addOption(getOption(PASSWORD_OPTION, "nsca password", "the password configured in NSCA, defaults to hasturrocks"));
+        options.addOption(getOption(PASSWORD_OPTION, "nsca password", "the password configured in NSCA, defaults to password"));
         options.addOption(getOption(TIMEOUT_OPTION, "send timeout", "the timeout to use when sending the passive check in ms, defaults to 10000"));
 
         return options;
