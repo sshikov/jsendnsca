@@ -35,7 +35,7 @@ public class NagiosPassiveCheckSenderTest {
 	private static final String HOSTNAME = "localhost";
 	private static final String MESSAGE = "Test Message";
 	private static final String SERVICE_NAME = "Test Service Name";
-	private static final String PASSWORD = "hasturrocks";
+	private static final String PASSWORD = "password";
 	
 	private static NagiosNscaStub stub;
 
