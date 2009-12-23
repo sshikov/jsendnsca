@@ -1,12 +1,10 @@
 package com.googlecode.jsendnsca.core.builders;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.NagiosSettings;
-import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 
 @SuppressWarnings("static-access")
 public class NagiosSettingsBuilderTest {
@@ -19,7 +17,6 @@ public class NagiosSettingsBuilderTest {
 		assertEquals(defaultNagiosSettings, nagiosSettings);
 	}
 	
-	@Ignore
 	@Test
 	public void shouldCreateWithEverythingOverriden() throws Exception {
 		String host = "nagioshost";
