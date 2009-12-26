@@ -46,17 +46,20 @@ class PassiveCheckBytesBuilder {
     }
 
     public PassiveCheckBytesBuilder withHostname(String hostname) {
-        writeFixedString(hostname, HOST_NAME_SIZE);
+        writeFixedString(hostname, HOST_NAME_SIZE - 1);
+        skipBytes(1);
         return this;
     }
 
     public PassiveCheckBytesBuilder withServiceName(String serviceName) {
-        writeFixedString(serviceName, SERVICE_NAME_SIZE);
+        writeFixedString(serviceName, SERVICE_NAME_SIZE - 1);
+        skipBytes(1);
         return this;
     }
 
     public PassiveCheckBytesBuilder withMessage(String message) {
-        writeFixedString(message, PLUGIN_OUTPUT_SIZE);
+        writeFixedString(message, PLUGIN_OUTPUT_SIZE - 1);
+        skipBytes(1);
         return this;
     }
 
