@@ -75,7 +75,7 @@ public class NagiosPassiveCheckSenderTest {
 
     @Test
     public void shouldSendPassiveCheck() throws Exception {
-        final NagiosSettings nagiosSettings = NagiosSettingsBuilder.withNagiosHost(HOSTNAME).withPassword(PASSWORD)
+        final NagiosSettings nagiosSettings = NagiosSettingsBuilder.withDefaults().withNagiosHost(HOSTNAME).withPassword(PASSWORD)
                 .create();
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);

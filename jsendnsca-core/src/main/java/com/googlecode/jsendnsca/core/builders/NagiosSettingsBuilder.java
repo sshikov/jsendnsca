@@ -51,7 +51,17 @@ public class NagiosSettingsBuilder {
     public static NagiosSettings create() {
         return instance.nagiosSettings;
     }
-
+    
+    /**
+     * The next {@link NagiosSettings} created will use the defaults
+     * 
+     * @return the {@link NagiosSettingsBuilder} instance with all the default settings
+     */
+    public static NagiosSettingsBuilder withDefaults() {
+        instance.nagiosSettings = new NagiosSettings();
+        return instance;
+    }
+    
     /**
      * The next {@link NagiosSettings} created will use the supplied nagiosHost
      * 
