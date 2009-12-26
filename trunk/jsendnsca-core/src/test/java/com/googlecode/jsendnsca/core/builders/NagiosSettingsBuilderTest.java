@@ -40,15 +40,5 @@ public class NagiosSettingsBuilderTest {
 		assertEquals(connectionTimeout, nagiosSettings.getConnectTimeout());
 		assertEquals(responseTimeout, nagiosSettings.getTimeout());
 		assertEquals(NagiosSettings.NO_ENCRYPTION, nagiosSettings.getEncryptionMethod());
-		
-		// re-set all the defaults so the other tests aren't broken
-		nagiosSettings = NagiosSettingsBuilder.createDefault();
-		NagiosSettingsBuilder
-		    .withNagiosHost(nagiosSettings.getNagiosHost())
-		    .withPort(nagiosSettings.getPort())
-		    .withPassword(nagiosSettings.getPassword())
-		    .withConnectionTimeout(nagiosSettings.getConnectTimeout())
-		    .withEncryption(1)
-		    .create();
 	}
 }
