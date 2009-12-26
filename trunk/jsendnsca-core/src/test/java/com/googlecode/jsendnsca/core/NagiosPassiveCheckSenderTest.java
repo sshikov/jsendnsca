@@ -139,15 +139,15 @@ public class NagiosPassiveCheckSenderTest {
         boolean foundTrimmedTooLongMessage = false;
         List<MessagePayload> passiveChecksList = stub.getMessagePayloadList();
         for (MessagePayload currentPayload : passiveChecksList) {
-            if (currentPayload.getHostname().length() == tooLongHostName.length() - 1) {
+            if (currentPayload.getHostname().equals(tooLongHostName.substring(0, tooLongHostName.length() - 1))) {
                 foundTrimmedTooLongHostName = true;
             }
 
-            if (currentPayload.getServiceName().length() == tooLongServiceName.length() - 1) {
+            if (currentPayload.getServiceName().equals(tooLongServiceName.substring(0, tooLongServiceName.length() - 1))) {
                 foundTrimmedTooLongServiceName = true;
             }
 
-            if (currentPayload.getMessage().length() == tooLongMessage.length() - 1) {
+            if (currentPayload.getMessage().equals(tooLongMessage.substring(0, tooLongMessage.length() - 1))) {
                 foundTrimmedTooLongMessage = true;
             }
         }
