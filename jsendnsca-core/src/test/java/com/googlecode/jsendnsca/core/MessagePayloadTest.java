@@ -54,6 +54,23 @@ public class MessagePayloadTest {
 		assertEquals("test message", messagePayload.getMessage());
 	}
 
+	@Test
+	public void shouldConstructTwoNewMessagePayload() throws Exception {
+		final MessagePayload messagePayload = new MessagePayload("localhost", 0, "test service", "test message");
+
+		final MessagePayload messagePayload2 = new MessagePayload("somehost", 1, "foo service", "foo message");
+
+		assertEquals("localhost", messagePayload.getHostname());
+		assertEquals(MessagePayload.LEVEL_OK, messagePayload.getLevel());
+		assertEquals("test service", messagePayload.getServiceName());
+		assertEquals("test message", messagePayload.getMessage());
+
+		assertEquals("somehost", messagePayload2.getHostname());
+		assertEquals(MessagePayload.LEVEL_WARNING, messagePayload2.getLevel());
+		assertEquals("foo service", messagePayload2.getServiceName());
+		assertEquals("foo message", messagePayload2.getMessage());
+	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void shouldThrowExceptionOnConstructingNewMessagePayloadWithNullHostname() throws Exception {
 		new MessagePayload(null, 1, "test service", "test message");

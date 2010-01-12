@@ -41,7 +41,11 @@ public class MessagePayloadBuilder {
 	 * @return the built {@link MessagePayload}
 	 */
 	public static MessagePayload create() {
-		return instance.payload;
+        MessagePayload answer = instance.payload;
+        // create a new instance for builder to use next time otherwise we end up
+        // changing the instance we just created
+        instance = new MessagePayloadBuilder();
+        return answer;
 	}
 
 	/**
