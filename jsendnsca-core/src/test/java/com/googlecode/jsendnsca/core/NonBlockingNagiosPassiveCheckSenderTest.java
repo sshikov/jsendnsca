@@ -19,14 +19,22 @@ import static org.hamcrest.Matchers.*;
 import java.io.IOException;
 import java.util.Date;
 
+import org.junit.After;
 import org.junit.Test;
 
 
 public class NonBlockingNagiosPassiveCheckSenderTest {
+    
+	private NonBlockingNagiosPassiveCheckSender sender;
+	
+	@After
+	public void shutdownSender() {
+	    sender.shutdown();
+	}
 
-	@Test
+    @Test
 	public void shouldReturnImmediatelyWhenSendingPassiveCheck() throws Exception {
-		NonBlockingNagiosPassiveCheckSender sender = new NonBlockingNagiosPassiveCheckSender(new SlowNagiosPassiveCheckSender());
+		sender = new NonBlockingNagiosPassiveCheckSender(new SlowNagiosPassiveCheckSender());
 		
 		long start = new Date().getTime();
 		sender.send(new MessagePayload());
