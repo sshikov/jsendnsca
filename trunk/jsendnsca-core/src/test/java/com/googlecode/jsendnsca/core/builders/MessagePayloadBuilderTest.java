@@ -29,7 +29,7 @@ public class MessagePayloadBuilderTest {
 
     @Test
     public void shouldConstructNewMessagePayload() throws Exception {
-        final MessagePayload messagePayload = MessagePayloadBuilder.withHostname("localhost")
+        final MessagePayload messagePayload = new MessagePayloadBuilder().withHostname("localhost")
                 .withLevel(Level.CRITICAL)
                 .withServiceName("test service")
                 .withMessage("test message")
@@ -43,13 +43,13 @@ public class MessagePayloadBuilderTest {
 
     @Test
     public void shouldConstructTwoNewMessagePayload() throws Exception {
-        final MessagePayload messagePayload = MessagePayloadBuilder.withHostname("localhost")
+        final MessagePayload messagePayload = new MessagePayloadBuilder().withHostname("localhost")
                 .withLevel(Level.OK)
                 .withServiceName("test service")
                 .withMessage("test message")
                 .create();
 
-        final MessagePayload messagePayload2 = MessagePayloadBuilder.withHostname("somehost")
+        final MessagePayload messagePayload2 = new MessagePayloadBuilder().withHostname("somehost")
                 .withLevel(Level.WARNING)
                 .withServiceName("foo service")
                 .withMessage("foo message")
