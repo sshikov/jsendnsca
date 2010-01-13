@@ -6,14 +6,13 @@ import org.junit.Test;
 
 import com.googlecode.jsendnsca.core.NagiosSettings;
 
-@SuppressWarnings("static-access")
 public class NagiosSettingsBuilderTest {
 
 	@Test
 	public void shouldCreateDefault() throws Exception {
 		NagiosSettings defaultNagiosSettings = new NagiosSettings();
 		
-		NagiosSettings nagiosSettings = NagiosSettingsBuilder.createDefault();
+		NagiosSettings nagiosSettings = new NagiosSettingsBuilder().createDefault();
 		assertEquals(defaultNagiosSettings, nagiosSettings);
 	}
 	
@@ -25,7 +24,7 @@ public class NagiosSettingsBuilderTest {
 		int connectionTimeout = 1;
 		int responseTimeout = 1;
 
-		NagiosSettings nagiosSettings = NagiosSettingsBuilder
+		NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
 			.withNagiosHost(host)
 			.withPort(port)
 			.withPassword(password)

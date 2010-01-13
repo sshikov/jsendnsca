@@ -20,7 +20,7 @@ import com.googlecode.jsendnsca.core.NagiosSettings;
  * 
  * <pre>
  * 
- * final NagiosSettings nagiosSettings = NagiosSettingsBuilder
+ * final NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
  *      .withNagiosHost(HOSTNAME)
  *      .withPassword(PASSWORD)
  *      .create();
@@ -30,8 +30,6 @@ import com.googlecode.jsendnsca.core.NagiosSettings;
  */
 public class NagiosSettingsBuilder {
 
-    private static NagiosSettingsBuilder instance = new NagiosSettingsBuilder();
-
     private NagiosSettings nagiosSettings = new NagiosSettings();
 
     /**
@@ -39,7 +37,7 @@ public class NagiosSettingsBuilder {
      * 
      * @return default instance
      */
-    public static NagiosSettings createDefault() {
+    public NagiosSettings createDefault() {
         return new NagiosSettings();
     }
 
@@ -48,8 +46,8 @@ public class NagiosSettingsBuilder {
      * 
      * @return the built instance
      */
-    public static NagiosSettings create() {
-        return instance.nagiosSettings;
+    public NagiosSettings create() {
+        return nagiosSettings;
     }
     
     /**
@@ -57,9 +55,9 @@ public class NagiosSettingsBuilder {
      * 
      * @return the {@link NagiosSettingsBuilder} instance with all the default settings
      */
-    public static NagiosSettingsBuilder withDefaults() {
-        instance.nagiosSettings = new NagiosSettings();
-        return instance;
+    public NagiosSettingsBuilder withDefaults() {
+        nagiosSettings = new NagiosSettings();
+        return this;
     }
     
     /**
@@ -69,9 +67,9 @@ public class NagiosSettingsBuilder {
      *            the NSCA hostname or IP address
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withNagiosHost(String nagiosHost) {
-        instance.nagiosSettings.setNagiosHost(nagiosHost);
-        return instance;
+    public NagiosSettingsBuilder withNagiosHost(String nagiosHost) {
+        nagiosSettings.setNagiosHost(nagiosHost);
+        return this;
     }
 
     /**
@@ -81,9 +79,9 @@ public class NagiosSettingsBuilder {
      *            the port NSCA is listening on
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withPort(int port) {
-        instance.nagiosSettings.setPort(port);
-        return instance;
+    public NagiosSettingsBuilder withPort(int port) {
+        nagiosSettings.setPort(port);
+        return this;
     }
 
     /**
@@ -93,9 +91,9 @@ public class NagiosSettingsBuilder {
      *            the NSCA password
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withPassword(String password) {
-        instance.nagiosSettings.setPassword(password);
-        return instance;
+    public NagiosSettingsBuilder withPassword(String password) {
+        nagiosSettings.setPassword(password);
+        return this;
     }
 
     /**
@@ -106,9 +104,9 @@ public class NagiosSettingsBuilder {
      *            the connection timeout
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withConnectionTimeout(int connectionTimeout) {
-        instance.nagiosSettings.setConnectTimeout(connectionTimeout);
-        return instance;
+    public NagiosSettingsBuilder withConnectionTimeout(int connectionTimeout) {
+        nagiosSettings.setConnectTimeout(connectionTimeout);
+        return this;
     }
 
     /**
@@ -119,9 +117,9 @@ public class NagiosSettingsBuilder {
      *            the NSCA response timeout
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withResponseTimeout(int responseTimeout) {
-        instance.nagiosSettings.setTimeout(responseTimeout);
-        return instance;
+    public NagiosSettingsBuilder withResponseTimeout(int responseTimeout) {
+        nagiosSettings.setTimeout(responseTimeout);
+        return this;
     }
 
     /**
@@ -129,9 +127,9 @@ public class NagiosSettingsBuilder {
      * 
      * @return the {@link NagiosSettingsBuilder} instance
      */
-    public static NagiosSettingsBuilder withNoEncryption() {
-        instance.nagiosSettings.setEncryptionMethod(NagiosSettings.NO_ENCRYPTION);
-        return instance;
+    public NagiosSettingsBuilder withNoEncryption() {
+        nagiosSettings.setEncryptionMethod(NagiosSettings.NO_ENCRYPTION);
+        return this;
     }
 
     /**
@@ -143,7 +141,7 @@ public class NagiosSettingsBuilder {
      * @return the {@link NagiosSettingsBuilder} instance
      */
     public NagiosSettingsBuilder withEncryption(int encryptionMethod) {
-        instance.nagiosSettings.setEncryptionMethod(encryptionMethod);
-        return instance;
+        nagiosSettings.setEncryptionMethod(encryptionMethod);
+        return this;
     }
 }

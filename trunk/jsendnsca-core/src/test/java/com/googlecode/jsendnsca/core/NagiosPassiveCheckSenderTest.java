@@ -31,7 +31,6 @@ import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
 import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 import com.googlecode.jsendnsca.core.mocks.NagiosNscaStub;
 
-@SuppressWarnings("static-access")
 public class NagiosPassiveCheckSenderTest {
 
     private static final String HOSTNAME = "localhost";
@@ -75,8 +74,11 @@ public class NagiosPassiveCheckSenderTest {
 
     @Test
     public void shouldSendPassiveCheck() throws Exception {
-        final NagiosSettings nagiosSettings = NagiosSettingsBuilder.withDefaults().withNagiosHost(HOSTNAME).withPassword(PASSWORD)
-                .create();
+        final NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
+            .withDefaults()
+            .withNagiosHost(HOSTNAME)
+            .withPassword(PASSWORD)
+            .create();
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
@@ -121,7 +123,9 @@ public class NagiosPassiveCheckSenderTest {
         String tooLongServiceName = new String(tooLongServiceNameChars);
         String tooLongMessage = new String(tooLongMessageChars);
 
-        final NagiosSettings nagiosSettings = NagiosSettingsBuilder.withNagiosHost(HOSTNAME).withPassword(PASSWORD)
+        final NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
+                .withNagiosHost(HOSTNAME)
+                .withPassword(PASSWORD)
                 .create();
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
@@ -159,8 +163,11 @@ public class NagiosPassiveCheckSenderTest {
 
     @Test
     public void shouldSendPassiveCheckTripleDes() throws Exception {
-        final NagiosSettings nagiosSettings = NagiosSettingsBuilder.withNagiosHost(HOSTNAME).withPassword(PASSWORD)
-                .withEncryption(NagiosSettings.TRIPLE_DES_ENCRYPTION).create();
+        final NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
+            .withNagiosHost(HOSTNAME)
+            .withPassword(PASSWORD)
+            .withEncryption(NagiosSettings.TRIPLE_DES_ENCRYPTION)
+            .create();
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
