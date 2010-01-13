@@ -5,9 +5,9 @@
 
 Many thanks the Claus Ibsen for identifying and providing fixes for the below issues and enhancements
 
-* Issue 18,19 - MessagePayloadBuilder and NagiosSettingsBuilder now no longer static and need to be newed up so they are thread safe
-* Issue 21 - MessagePayload now overrides toString() with contents of payload for ease of debugging and also now serializable so can be sent across the wire
-* Issue 22 - NonBlockingNagiosPassiveCheckSender now has shutdown method and also allows you to supply your own ExecutorService implementation
+ * Issue 18,19 - MessagePayloadBuilder and NagiosSettingsBuilder now no longer static and need to be newed up so they are thread safe
+ * Issue 21 - MessagePayload now overrides toString() with contents of payload for ease of debugging and also now serializable so can be sent across the wire
+ * Issue 22 - NonBlockingNagiosPassiveCheckSender now has shutdown method and also allows you to supply your own ExecutorService implementation
 
 = Changes for 1.2 =
 
