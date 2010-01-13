@@ -126,6 +126,12 @@ public class MessagePayloadTest {
 		}
 	}
 	
+	@Test
+    public void shouldReturnUsefulStringContainingMessagePayloadFields() throws Exception {
+        assertEquals("MessagePayload[level=3, hostname=localhost, serviceName=UNDEFINED, message=]", new MessagePayload().toString());
+        
+    }
+	
 	private static boolean isUnix() {
 		if(System.getProperty("os.name").toLowerCase().contains("windows")) {
 			return false;
