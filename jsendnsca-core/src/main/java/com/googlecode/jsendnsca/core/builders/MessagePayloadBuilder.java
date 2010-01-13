@@ -9,43 +9,28 @@ import com.googlecode.jsendnsca.core.MessagePayload;
  * Used to construct a {@link MessagePayload} using a builder pattern e.g.
  * 
  * <pre>
- * MessagePayload payload = MessagePayloadBuilder
+ * MessagePayload payload = new MessagePayloadBuilder()
  *			.withHostname("localhost")
  *			.withLevel(Level.CRITICAL)
  *			.withServiceName("Test Service Name")
  *			.withMessage("Test Message")
  *			.create();
  * </pre>
- * 
+ *
  * @author Raj.Patel
  * @since 1.2
  */
 public class MessagePayloadBuilder {
 
-	private static MessagePayloadBuilder instance = new MessagePayloadBuilder();
-
 	private MessagePayload payload = new MessagePayload();
-
-	/**
-	 * Return a default {@link MessagePayload}
-	 * 
-	 * @return a newly constructed default {@link MessagePayload}
-	 */
-	public static MessagePayload createDefault() {
-		return new MessagePayload();
-	}
 
 	/**
 	 * Return the built {@link MessagePayload}
 	 * 
 	 * @return the built {@link MessagePayload}
 	 */
-	public static MessagePayload create() {
-        MessagePayload answer = instance.payload;
-        // create a new instance for builder to use next time otherwise we end up
-        // changing the instance we just created
-        instance = new MessagePayloadBuilder();
-        return answer;
+	public MessagePayload create() {
+        return payload;
 	}
 
 	/**
@@ -55,10 +40,10 @@ public class MessagePayloadBuilder {
 	 * @throws UnknownHostException
 	 *             error while determining local machine name
 	 */
-	public static MessagePayloadBuilder withLocalHostname()
+	public MessagePayloadBuilder withLocalHostname()
 			throws UnknownHostException {
-		instance.payload.useLocalHostname();
-		return instance;
+		payload.useLocalHostname();
+		return this;
 	}
 
 	/**
@@ -69,10 +54,10 @@ public class MessagePayloadBuilder {
 	 * @throws UnknownHostException
 	 *             error while determining local machine name
 	 */
-	public static MessagePayloadBuilder withCanonicalHostname()
+	public MessagePayloadBuilder withCanonicalHostname()
 			throws UnknownHostException {
-		instance.payload.setHostname(true);
-		return instance;
+		payload.setHostname(true);
+		return this;
 	}
 
 	/**
@@ -82,9 +67,9 @@ public class MessagePayloadBuilder {
 	 *            the hostname
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withHostname(String hostname) {
-		instance.payload.setHostname(hostname);
-		return instance;
+	public MessagePayloadBuilder withHostname(String hostname) {
+		payload.setHostname(hostname);
+		return this;
 	}
 
 	/**
@@ -95,9 +80,9 @@ public class MessagePayloadBuilder {
 	 *            {@link MessagePayload}
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withLevel(int level) {
-		instance.payload.setLevel(level);
-		return instance;
+	public MessagePayloadBuilder withLevel(int level) {
+		payload.setLevel(level);
+		return this;
 	}
 
 	/**
@@ -108,9 +93,9 @@ public class MessagePayloadBuilder {
 	 *            "warning", "critical" or "unknown"
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withLevel(String level) {
-		instance.payload.setLevel(level);
-		return instance;
+	public MessagePayloadBuilder withLevel(String level) {
+		payload.setLevel(level);
+		return this;
 	}
 
 	/**
@@ -120,9 +105,9 @@ public class MessagePayloadBuilder {
 	 *            the {@link Level}
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withLevel(Level level) {
-		instance.payload.setLevel(level);
-		return instance;
+	public MessagePayloadBuilder withLevel(Level level) {
+		payload.setLevel(level);
+		return this;
 	}
 
 	/**
@@ -132,9 +117,9 @@ public class MessagePayloadBuilder {
 	 *            the service name
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withServiceName(String serviceName) {
-		instance.payload.setServiceName(serviceName);
-		return instance;
+	public MessagePayloadBuilder withServiceName(String serviceName) {
+		payload.setServiceName(serviceName);
+		return this;
 	}
 
 	/**
@@ -144,8 +129,8 @@ public class MessagePayloadBuilder {
 	 *            the message
 	 * @return the {@link MessagePayloadBuilder}
 	 */
-	public static MessagePayloadBuilder withMessage(String message) {
-		instance.payload.setMessage(message);
-		return instance;
+	public MessagePayloadBuilder withMessage(String message) {
+		payload.setMessage(message);
+		return this;
 	}
 }

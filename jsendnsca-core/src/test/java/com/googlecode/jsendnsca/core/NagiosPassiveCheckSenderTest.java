@@ -80,7 +80,7 @@ public class NagiosPassiveCheckSenderTest {
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
-        final MessagePayload payload = MessagePayloadBuilder.withHostname(HOSTNAME).withLevel(Level.CRITICAL)
+        final MessagePayload payload = new MessagePayloadBuilder().withHostname(HOSTNAME).withLevel(Level.CRITICAL)
                 .withServiceName(SERVICE_NAME).withMessage(MESSAGE).create();
 
         passiveAlerter.send(payload);
@@ -126,7 +126,7 @@ public class NagiosPassiveCheckSenderTest {
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
-        final MessagePayload payload = MessagePayloadBuilder.withHostname(tooLongHostName).withServiceName(
+        final MessagePayload payload = new MessagePayloadBuilder().withHostname(tooLongHostName).withServiceName(
                 tooLongServiceName).withMessage(tooLongMessage).create();
 
         passiveAlerter.send(payload);
@@ -164,7 +164,7 @@ public class NagiosPassiveCheckSenderTest {
 
         final NagiosPassiveCheckSender passiveAlerter = new NagiosPassiveCheckSender(nagiosSettings);
 
-        final MessagePayload payload = MessagePayloadBuilder.withHostname(HOSTNAME).withLevel(Level.CRITICAL)
+        final MessagePayload payload = new MessagePayloadBuilder().withHostname(HOSTNAME).withLevel(Level.CRITICAL)
                 .withServiceName(SERVICE_NAME).withMessage(MESSAGE).create();
 
         passiveAlerter.send(payload);
