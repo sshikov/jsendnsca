@@ -13,6 +13,7 @@
  */
 package com.googlecode.jsendnsca.core;
 
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.MessageFormat;
@@ -28,9 +29,9 @@ import com.googlecode.jsendnsca.core.utils.StringUtils;
  * @version 1.0
  * @see MessagePayloadBuilder
  */
-public class MessagePayload {
+public class MessagePayload implements Serializable {
 
-	/**
+    /**
 	 * OK Level
 	 */
 	public static final int LEVEL_OK = 0;
@@ -46,6 +47,8 @@ public class MessagePayload {
 	 * Unknown level
 	 */
 	public static final int LEVEL_UNKNOWN = 3;
+
+	private static final long serialVersionUID = 6014395299584333124L;
 
 	private static final String DEFAULT_HOSTNAME = "localhost";
 	private static final String DEFAULT_SERVICENAME = "UNDEFINED";
@@ -270,5 +273,9 @@ public class MessagePayload {
 		return true;
 	}
 
-    
+    @Override
+    public String toString() {
+        return "MessagePayload[level=" + level + ", hostname=" + hostname + ", serviceName=" + serviceName
+                + ", message=" + message + "]";
+    }
 }
