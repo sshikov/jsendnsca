@@ -27,20 +27,20 @@ import java.util.concurrent.Executors;
  * 
  * This sender is useful where you don't want to wait for the passive check to be sent and
  * don't care if the sending fails<p>
- * 
+ *
  * @author Raj Patel
  * @since 1.2
  */
 public class NonBlockingNagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 
 	private final INagiosPassiveCheckSender sender;
-	private final ExecutorService executor;
+	private ExecutorService executor;
 
 	/**
 	 * Construct a new {@link NonBlockingNagiosPassiveCheckSender} with the provided
 	 * {@link NagiosSettings}
 	 * 
-	 * @param nagiosSettings
+	 * @param settings
 	 *            the {@link NagiosSettings} to use to send the Passive Check
 	 */
 	public NonBlockingNagiosPassiveCheckSender(NagiosSettings settings) {
@@ -62,6 +62,29 @@ public class NonBlockingNagiosPassiveCheckSender implements INagiosPassiveCheckS
 	public void send(MessagePayload payload) throws NagiosException, IOException {
 		executor.execute(new NonBlockingSender(payload));
 	}
+
+    /**
+     * Sets the backing executor to use if you do not want to use the default executor
+     * which is a single thread executor.
+     * <p/>
+     * You may want to use a custom executor in environments where you want to be in control
+     * of the used thread pools.
+     *
+     * @param executor the custom executor to use
+     */
+    public void setExecutor(ExecutorService executor) {
+        this.executor = executor;
+    }
+
+    /**
+     * Shutdown the backing executor.
+     * <p/>
+     * To be used when your application has been shutdown and you want to cleanup all resources
+     * such as if you run in a hot deployment environment.
+     */
+    public void shutdown() {
+        executor.shutdown();
+    }
 	
 	private class NonBlockingSender implements Runnable {
 
