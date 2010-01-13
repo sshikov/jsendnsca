@@ -18,7 +18,6 @@ import com.googlecode.jsendnsca.core.builders.NagiosSettingsBuilder;
 
 public class Snippet {
     
-    @SuppressWarnings("static-access")
     public static void main(String[] args) {
         final NagiosSettings nagiosSettings = new NagiosSettingsBuilder()
                 .withNagiosHost("localhost")
