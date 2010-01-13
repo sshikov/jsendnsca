@@ -94,7 +94,7 @@ public class NagiosPassiveCheckSender implements INagiosPassiveCheckSender {
 		} catch (SocketTimeoutException ste) {
 			throw ste;
 		} catch (Exception e) {
-			throw new NagiosException("Error occured while sending passive alert", e);
+			throw new NagiosException("Error occurred while sending passive alert", e);
 		} finally {
 			IOUtils.closeQuietly(outputStream);
 			IOUtils.closeQuietly(inputStream);
