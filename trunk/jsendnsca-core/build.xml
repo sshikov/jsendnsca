@@ -5,6 +5,7 @@
 	<property name="test.source" location="src/test/java" />
 	<property name="target" location="target" />
 	<property name="jarfile" location="${target}/jsendnsca-core-${version}.jar" />
+	<property name="jartestfile" location="${target}/jsendnsca-core-test-${version}.jar" />
 	<property name="classes" location="${target}/classes" />
 	<property name="test.classes" location="${target}/test-classes" />
 	<property name="test.reports" location="${target}/test-reports" />
@@ -93,7 +94,7 @@
 		</junitreport>
 		<cobertura-report format="html" destdir="${cobertura.report}" srcdir="${source}" />
 	</target>
-
+	
 	<target name="package" depends="test" description="generate the distribution including jar, javadocs and zip/gzip packages">
 		<mkdir dir="${docs}" />
 		<mkdir dir="${packages}" />
@@ -106,6 +107,7 @@
 			<attribute name="Build-OS-Version" value="${os.version}" />
 		</manifest>
 		<jar jarfile="${jarfile}" basedir="${classes}" manifest="${target}/MANIFEST.MF" />
+		<jar jarfile="${jartestfile}" basedir="${test.classes}" excludes="**/*Test.class"/>
 		<javadoc packagenames="com.googlecode.jsendnsca.*" sourcepath="${source}" defaultexcludes="yes" destdir="${docs}" author="true" version="true" use="true" excludepackagenames="org.apache.*" windowtitle="JSend NSCA Core API" />
 		<zip destfile="${packages}/jsendnsca-core-${version}.zip">
 			<zipfileset dir="${docs}" prefix="javadocs" />
