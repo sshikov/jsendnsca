@@ -1,6 +1,6 @@
 <project name="jsendnsca-cli" default="package" basedir=".">
 	<description>jsend-nsca cli build</description>
-	<property name="version" value="1.1.1" />
+	<property name="version" value="1.1.2" />
 	<property name="source" location="src/main/java" />
 	<property name="scripts" location="src/main/bin" />
 	<property name="test-source" location="src/test/java" />
@@ -45,13 +45,13 @@
 	</target>
 
 	<target name="compile" depends="-build-core,-init" description="compile the source ">
-		<javac srcdir="${source}" destdir="${classes}">
+		<javac srcdir="${source}" destdir="${classes}" debug="true" target="1.5">
 			<classpath refid="class-path" />
 		</javac>
 	</target>
 
 	<target name="-test-compile" depends="compile" description="compile the test source ">
-		<javac srcdir="${test-source}" destdir="${test-classes}">
+		<javac srcdir="${test-source}" destdir="${test-classes}" target="1.5">
 			<classpath>
 				<path refid="class-path" />
 				<path refid="test-class-path" />
