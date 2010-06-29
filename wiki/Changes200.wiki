@@ -1,4 +1,5 @@
 #summary Changes for 2.0.0
+#labels Featured
 
 = Changes for 2.0.0 =
 
